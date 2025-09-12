@@ -27,5 +27,10 @@ public class Carta {
 		this.palo = palo;
 	}
 	
+	@Override
+	public String toString() {
+	    return valor + "" + palo;
+	}
+	
 	
 }

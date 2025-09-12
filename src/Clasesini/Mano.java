@@ -31,6 +31,14 @@ public class Mano {
 	}
 	
 	
+	 public void mostrarMano() {
+	        
+		 	System.out.println("Cartas del jugador:");
+	        for (Carta c : mano) {
+	            System.out.println(c);
+	        }
+	    }
+	
 	
 	
 	
