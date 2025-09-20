@@ -3,7 +3,9 @@ package Ejercicio1;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import Clasesini.Carta;
@@ -15,8 +17,6 @@ public class ej1 {
 	public static void main(String[] args) {
         
 		String ruta = "src/Ejercicio1/entrada.txt";
-        Set<Carta> cartas = new LinkedHashSet();
-        Mano m = new Mano(null);
 
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
             String linea;
@@ -24,9 +24,10 @@ public class ej1 {
                 
                 
                 String l = linea.trim();
-        
+                List<Carta> cartas = new ArrayList<>();
             
-            for (int i = 0; i + 1 < l.length(); i += 2) {
+	            
+	            for (int i = 0; i + 1 < l.length(); i += 2) {
             	char valor;
             	char palo;
             	Palo p = null;
@@ -57,8 +58,9 @@ public class ej1 {
             	
             }
             
-            m.setMano(cartas);
+	        Mano m = new Mano(cartas);
             m.mostrarMano();
+            System.out.println("Mejor jugada: " + m.mejorJugada());
         	}
         } catch (IOException e) {
             e.printStackTrace();
