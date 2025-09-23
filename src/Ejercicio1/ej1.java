@@ -36,6 +36,8 @@ public class ej1 {
             	 valor =linea.charAt(i);
             	 palo = linea.charAt(i + 1);
             	 
+            	 p=Palo.valueOf(palo+"");
+            	 /*
             	 if (palo == 'h') {
             		 p = Palo.h;
             	 }
@@ -51,6 +53,7 @@ public class ej1 {
             	 else if (palo == 'c') {
             		 p = Palo.c;
             	 }
+            	 */
             	 
             	 Carta c = new Carta(valor,p);
             	
@@ -60,7 +63,11 @@ public class ej1 {
             
 	        Mano m = new Mano(cartas);
             m.mostrarMano();
-            System.out.println("Mejor jugada: " + m.mejorJugada());
+            System.out.println(" - Mejor jugada: " + m.mejorJugada()+" con "+m.mejorCartas());
+            m.mostarDraws();
+            
+            System.out.println("\n");
+            
         	}
         } catch (IOException e) {
             e.printStackTrace();
