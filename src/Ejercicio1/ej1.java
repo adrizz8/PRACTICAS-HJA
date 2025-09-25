@@ -63,8 +63,8 @@ public class ej1 {
             
 	        Mano m = new Mano(cartas);
             m.mostrarMano();
-            System.out.println(" - Mejor jugada: " + m.mejorJugada()+" con "+m.mejorCartas());
-            m.mostarDraws();
+            System.out.println(" - Mejor jugada: " + m.mejorJugada()+" con "+m.mostrar_Cartas_Jugada());
+            m.mostrarDraws();
             
             System.out.println("\n");
             

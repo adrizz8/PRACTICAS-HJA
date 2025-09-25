@@ -194,12 +194,13 @@ public class Mano {
 		        setValores.contains(3) && setValores.contains(4) &&
 		        setValores.contains(5)) {
 		        esescalera = true;
+		        Max_escalera=5;
 		    }
 
 		    return esescalera;
 		}
 	 
-public void HighCard_to_Poker() {
+	 	public void HighCard_to_Poker() {
 
 		 
 		 Map<Integer, Integer> cuenta = new HashMap<>();
@@ -301,7 +302,7 @@ public void HighCard_to_Poker() {
 	}
 
 
-	public void mostarDraws() {
+	public void mostrarDraws() {
 		
 		for(String aux: Draws) {
 			System.out.println(" - Draw: "+aux);
@@ -309,7 +310,7 @@ public void HighCard_to_Poker() {
 		
 	}
 	
-	public String mejorCartas() {
+	public String mostrar_Cartas_Jugada() {
 		String cartas="";
 		 switch (mejorjugada) {
 		 	//Muestra las cartas de la escalera de mayor a menor
@@ -317,6 +318,13 @@ public void HighCard_to_Poker() {
 				 
 				 int siguiente = Max_escalera - 4;
 				 int i = 0;
+				 
+				 //caso especial
+				 if(siguiente==1) {
+					 //como esta ordenada la mano en la ultima posicion siempre hay un as en la ultima posicion
+					 cartas+=mano.get(mano.size()-1);
+					 siguiente++;
+				 }
 
 				 while (i < mano.size() && siguiente <= Max_escalera) {
 				     Carta aux = mano.get(i);
