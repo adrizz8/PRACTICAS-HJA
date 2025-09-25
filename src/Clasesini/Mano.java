@@ -126,76 +126,79 @@ public class Mano {
 
 		    List<Integer> valores = new ArrayList<>(setValores);
 		    Collections.sort(valores);
-
-		    int primero;
-		    int segundo;
-		    int cont =0;//cuantos elementos seguidos hay
-		    int cont_gutshot=0;//cuantos elementos de una escalera que le falta un numero por el medio hay
-		    boolean gutshot=false;//ya hay un hueco es la escalera o no
-		    for (int i = 0; i < valores.size()-1 ; i++) {
-		    	
-		    	primero=valores.get(i);
-		    	segundo=valores.get(i+1);
-		    	
-		    	if(segundo-primero==1) {//sigue contando la escalera
-		    		cont++;
-		    		cont_gutshot++;
-		    		
-		    		if(cont>=4) { 
-		    			esescalera=true;
-		    			Max_escalera=segundo;
-		    		}
-		    		
-		    	}else if(segundo-primero==2) {//Hay solo 2 de distancia, se corta la escalera
-		    								  //pero puede haber Draw gutshot
-		    		//Draw de escalera sin huecos 
-		    		if(cont==3) Draws.add("Open-ended");
-		    		cont=0;
-		    		
-		    		if(!gutshot) {//primer hueco en la escalera
-			    		gutshot=true;
-			    		cont_gutshot++;
-		    		}else {//segundo hueco, gutshot no valida
-		    			if(cont_gutshot>=3&&gutshot)Draws.add("Gutshot");
-		    			gutshot=false;
-		    			cont_gutshot=0;
-		    		}
-		    	}else if(segundo-primero>2) {//Mas de 2 num de distancia
-		    		if(cont==3) Draws.add("Open-ended");
-		    		cont=0;
-		    		if(cont_gutshot>=3&&gutshot)Draws.add("Gutshot");
-		    		cont_gutshot=0;
-		    	}
-		    	
-		    }
 		    
-		    //comprobaciones necesarias
-		    if(cont==3) Draws.add("Open-ended");
-		    
-    		if(cont_gutshot>=3&&gutshot)Draws.add("Gutshot");
-    		
-		    
-		    /*
-		     * Si hay parejas en medio de la escalera no funciona bien
-		     * 2h3s3h4s5c6h
-		    //Aqui se comprueba si hay 5 consecutivos
-		    for (int i = 0; i <= valores.size() - 5; i++) {
-		        int primero = valores.get(i);
-		        int ultimo = valores.get(i + 4);
-		        if (ultimo - primero == 4) {
-		            esescalera = true;
-		        }
-		    }
-		    */
-    		
-    		//Falta ver como mostrar este caso
+		  //Falta ver como mostrar este caso
 		    // caso especial A,2,3,4,5
 		    if (setValores.contains(14) && setValores.contains(2) &&
 		        setValores.contains(3) && setValores.contains(4) &&
 		        setValores.contains(5)) {
 		        esescalera = true;
 		        Max_escalera=5;
+		        
+		    }else {
+
+			    int primero;
+			    int segundo;
+			    int cont =0;//cuantos elementos seguidos hay
+			    int cont_gutshot=0;//cuantos elementos de una escalera que le falta un numero por el medio hay
+			    boolean gutshot=false;//ya hay un hueco es la escalera o no
+			    for (int i = 0; i < valores.size()-1 ; i++) {
+			    	
+			    	primero=valores.get(i);
+			    	segundo=valores.get(i+1);
+			    	
+			    	if(segundo-primero==1) {//sigue contando la escalera
+			    		cont++;
+			    		cont_gutshot++;
+			    		
+			    		if(cont>=4) { 
+			    			esescalera=true;
+			    			Max_escalera=segundo;
+			    		}
+			    		
+			    	}else if(segundo-primero==2) {//Hay solo 2 de distancia, se corta la escalera
+			    								  //pero puede haber Draw gutshot
+			    		//Draw de escalera sin huecos 
+			    		if(cont==3) Draws.add("Open-ended");
+			    		cont=0;
+			    		
+			    		if(!gutshot) {//primer hueco en la escalera
+				    		gutshot=true;
+				    		cont_gutshot++;
+			    		}else {//segundo hueco, gutshot no valida
+			    			if(cont_gutshot>=3&&gutshot)Draws.add("Gutshot");
+			    			gutshot=false;
+			    			cont_gutshot=0;
+			    		}
+			    	}else if(segundo-primero>2) {//Mas de 2 num de distancia
+			    		if(cont==3) Draws.add("Open-ended");
+			    		cont=0;
+			    		if(cont_gutshot>=3&&gutshot)Draws.add("Gutshot");
+			    		cont_gutshot=0;
+			    	}
+			    	
+			    }
+			    
+			    //comprobaciones necesarias
+			    if(cont==3) Draws.add("Open-ended");
+			    
+	    		if(cont_gutshot>=3&&gutshot)Draws.add("Gutshot");
+	    		
+			    
+			    /*
+			     * Si hay parejas en medio de la escalera no funciona bien
+			     * 2h3s3h4s5c6h
+			    //Aqui se comprueba si hay 5 consecutivos
+			    for (int i = 0; i <= valores.size() - 5; i++) {
+			        int primero = valores.get(i);
+			        int ultimo = valores.get(i + 4);
+			        if (ultimo - primero == 4) {
+			            esescalera = true;
+			        }
+			    }
+			    */
 		    }
+    		
 
 		    return esescalera;
 		}
@@ -313,6 +316,37 @@ public class Mano {
 	public String mostrar_Cartas_Jugada() {
 		String cartas="";
 		 switch (mejorjugada) {
+		 	//Muestra las carta de escaleta de color
+		 	case"Escalera de color":{
+		 		 int siguiente = Max_escalera - 4;
+				 int i = 0;
+				 
+				 //caso especial
+				 if(siguiente==1) {
+					 int j=mano.size()-1;
+					 //empezamos a mirar por los ases del final, si es del mismo color es el correcto
+					 while(siguiente==1) {
+					     if (mano.get(j).getPalo().ordinal()==palo_color.ordinal()) {
+					    	
+					    	 cartas+=mano.get(j);
+							 siguiente++;
+					     }
+						 j--;
+					 }
+					
+				 }
+				 
+		 		 while (i < mano.size() && siguiente <= Max_escalera) {
+				     Carta aux = mano.get(i);
+
+				     if (aux.getValorNumerico() == siguiente&&aux.getPalo().ordinal()==palo_color.ordinal()) {
+				         cartas += aux.toString();
+				         siguiente++;
+				     }
+				     i++;
+				 }
+				 break;		
+		 	}
 		 	//Muestra las cartas de la escalera de mayor a menor
 			 case"Escalera":{
 				 
