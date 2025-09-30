@@ -59,6 +59,83 @@ public class Mano {
 	        System.out.println();
 	    }
 	 
+	 public String mejorJugadaConMesa(List<Carta> mesa) {
+		    List<Carta> todas = new ArrayList<>();
+		    todas.addAll(this.mano); 
+		    todas.addAll(mesa);        
+
+		   //Caso en el que tenemos 5 cartas, se las mandamos a la función del ej1
+		    if (todas.size() == 5) {
+		        this.mano = todas;
+		        return this.mejorJugada();
+		    }
+
+		    // Caso con mas de 5 cartas en total
+		    List<List<Carta>> combinaciones = generarCombinaciones(todas, 5);
+
+		    String mejor = "Carta alta";  
+		    Mano mejorMano = null;
+
+		    for (List<Carta> combo : combinaciones) {
+		        Mano temp = new Mano(combo);
+		        String jugada = temp.mejorJugada();
+
+		        if (compararJugadas(jugada, mejor) > 0) {
+		            mejor = jugada;
+		            mejorMano = temp;
+		        }
+		    }
+
+		    if (mejorMano != null) {
+		        this.mano = mejorMano.mano;
+		        this.mejorjugada = mejorMano.mejorjugada;
+		        this.Draws = mejorMano.Draws;
+		        this.val_aux1 = mejorMano.val_aux1;
+		        this.cant_aux1 = mejorMano.cant_aux1;
+		        this.val_aux2 = mejorMano.val_aux2;
+		        this.cant_aux2 = mejorMano.cant_aux2;
+		        this.Max_escalera = mejorMano.Max_escalera;
+		        this.palo_color = mejorMano.palo_color;
+		    }
+
+		    return mejor;
+		}
+
+	 
+		private List<List<Carta>> generarCombinaciones(List<Carta> cartas, int k) {
+		    List<List<Carta>> resultado = new ArrayList<>();
+		    generarCombinacionesRec(cartas, k, 0, new ArrayList<>(), resultado);
+		    return resultado;
+		}
+
+		private void generarCombinacionesRec(List<Carta> cartas, int k, int inicio,
+		                                     List<Carta> actual, List<List<Carta>> resultado) {
+		    if (actual.size() == k) {
+		        resultado.add(new ArrayList<>(actual));
+		        return;
+		    }
+		    for (int i = inicio; i < cartas.size(); i++) {
+		        actual.add(cartas.get(i));
+		        generarCombinacionesRec(cartas, k, i + 1, actual, resultado);
+		        actual.remove(actual.size() - 1);
+		    }
+		}
+
+		private int compararJugadas(String j1, String j2) {
+		    List<String> ranking = List.of(
+		        "Carta alta",
+		        "Par",
+		        "Doble par",
+		        "Trío",
+		        "Escalera",
+		        "Color",
+		        "Full House",
+		        "Poker",
+		        "Escalera de color"
+		    );
+		    return Integer.compare(ranking.indexOf(j1), ranking.indexOf(j2));
+		}
+	 
 	 
 	 public boolean esColor(List<Carta> m) {
 		 
