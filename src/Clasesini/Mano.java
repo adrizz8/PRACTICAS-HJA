@@ -281,4 +281,42 @@ public class Mano {
 		}
 		return cartas;
 	}
+	
+	
+	public int getValor() {
+		int valor = 0;
+		switch(_mejorJugada) {
+			case "Pair":
+				valor = 1000;
+				break;
+			case "Two Pair":
+				valor = 2000;
+				break;
+			case "Three of a Kind":
+				valor = 3000;
+				break;
+			case "Straight":
+				valor = 4000;
+				break;
+			case "Flush":
+				valor = 5000;
+				break;
+			case "Full House":
+				valor = 6000;
+				break;
+			case "Four of a Kind":
+				valor = 7000;
+				break;
+			case "Straight Flush":
+				valor = 8000;
+				break;
+				
+		}
+		
+		for (int i = 0; i < _mano.size(); i++) {
+			valor += _mano.get(i).getValorNumerico();
+		}
+		
+		return valor;
+	}
 }

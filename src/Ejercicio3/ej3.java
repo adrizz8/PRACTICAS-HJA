@@ -6,11 +6,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import Clasesini.Carta;
+import Clasesini.Jugador;
 import Clasesini.Mano;
 import Clasesini.Palo;
+import simulator.model.Vehicle;
 
 public class ej3 {
 	
@@ -20,6 +24,8 @@ public class ej3 {
         String ruta = "src/Ejercicio3/entrada3.txt";
         String rutaSalida = "src/Ejercicio3/salida3.txt";
 
+        List<Jugador> Jugadores = new ArrayList<>();
+        
         try (BufferedReader br = new BufferedReader(new FileReader(ruta)); BufferedWriter bw = new BufferedWriter(new FileWriter(rutaSalida))) {
        
             String linea;
@@ -68,19 +74,31 @@ public class ej3 {
 
                     // Crear mano
                     Mano m = new Mano(cartas);
-
+                    //m.mejorJugada();
+                    Jugador jugador = new Jugador(id, m);
                     // Mejor jugada
-                    String mejor = m.mejorJugada();
+                   // String mejor = m.mejorJugada();
                     
-                    bw.write(id + ":  "+ mejor + " with " + m.mostrar_Cartas_Jugada());
-                    bw.newLine();
+                    Jugadores.add(jugador);
+                    
+                    //bw.write(id + ":  "+ mejor + " with " + m.mostrar_Cartas_Jugada());
+                    //bw.newLine();
                     
 
-                    // Mostrar resultado para el jugador
-                    //System.out.println(id + ":  "+ mejor + " with " + m.mostrar_Cartas_Jugada());
-                    //System.out.println(id + ":   " + m.mostrarMano() + "(" + m.mejorJugada() + ")");
+                   
                 }
-                bw.newLine();
+                
+                Jugadores.sort(Comparator.comparing(Jugador::getValorMano).reversed());
+                
+                //Mostrar resultado para el jugador
+                for(int i = 0; i < N; i++) {
+                	bw.write(Jugadores.get(i).getId() + ":  "+ Jugadores.get(i).getMejorJugada() + " with " + Jugadores.get(i).getMano().mostrar_Cartas_Jugada());
+                	bw.newLine();
+                }
+                //System.out.println(id + ":  "+ mejor + " with " + m.mostrar_Cartas_Jugada());
+                //System.out.println(id + ":   " + m.mostrarMano() + "(" + m.mejorJugada() + ")");
+                
+                //bw.newLine();
 
                 //System.out.println();
             }
