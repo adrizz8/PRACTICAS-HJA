@@ -1,115 +1,85 @@
 package Ejercicio2;
 
-
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import Clasesini.Carta;
 import Clasesini.Mano;
-import Clasesini.Mesa;
 import Clasesini.Palo;
 
 public class ej2 {
-	
-	public static void main(String[] args) {
-        
-		String ruta = "src/Ejercicio2/entrada2.txt";
 
-        try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
+    public static void main(String[] args) {
+
+        String ruta = "src/Ejercicio2/entrada2.txt";
+        String rutaSalida = "src/Ejercicio2/salida2.txt";
+        
+
+        try (BufferedReader br = new BufferedReader(new FileReader(ruta)) ; BufferedWriter bw = new BufferedWriter(new FileWriter(rutaSalida))) {
             String linea;
-        	while ((linea = br.readLine()) != null) {
-                
-                
+            while ((linea = br.readLine()) != null) {
+
                 String l = linea.trim();
+                if (l.isEmpty()) continue;
+
+                // Dividir por ;
+                String[] partes = l.split(";");
+                if (partes.length != 3) {
+                    System.out.println("Línea inválida: " + l);
+                    continue;
+                }
+
+                String cartasJugador = partes[0];   // AhAc
+                int n = Integer.parseInt(partes[1]); // 3 o 5
+                String cartasComunes = partes[2];   // QhJhTh
+
+                if (cartasJugador.length() != 4 || cartasComunes.length() != 2 * n) {
+                    System.out.println("Formato inválido en línea: " + l);
+                    continue;
+                }
+
+                // Construir lista de cartas
                 List<Carta> cartas = new ArrayList<>();
-                List<Carta> cartasmesa = new ArrayList<>();
-                int numcartas;
-                int i = 0;
-            
-	            
-	            while (i < 4) {
-            	char valor;
-            	char palo;
-            	Palo p = null;
-    
-            	
-            	 valor =linea.charAt(i);
-            	 palo = linea.charAt(i + 1);
-            	 
-            	 p=Palo.valueOf(palo+"");
-            	 /*
-            	 if (palo == 'h') {
-            		 p = Palo.h;
-            	 }
-            	 
-            	 else if (palo == 'd') {
-            		 p = Palo.d;
-            	 }
-            	 
-            	 else if (palo == 's') {
-            		 p = Palo.s;
-            	 }
-            	 
-            	 else if (palo == 'c') {
-            		 p = Palo.c;
-            	 }
-            	 */
-            	 
-            	 Carta c = new Carta(valor,p);
-            	
-            	cartas.add(c);
-            	i+= 2;
-	            }
-            
-	        Mano m = new Mano(cartas);
-	        
-	        i+=3;
-	        
-	        
-	        for (int j = i; j + 1 < l.length(); j+=2) {
-	        	
-	        	char valor;
-            	char palo;
-            	Palo p = null;
-    
-            	
-            	 valor =linea.charAt(j);
-            	 palo = linea.charAt(j + 1);
-            	 
-            	 p=Palo.valueOf(palo+"");
-            	 
-            	 Carta c = new Carta(valor,p);
-             	
-             	cartasmesa.add(c);
-	        	
-	        }
-	        
-	        Mesa mesa = new Mesa(cartasmesa);
-	        
-	        m.mostrarMano();
-	        
-	        System.out.println("\n");
-	        
-	        mesa.mostrarMesa();
-	        
-	        
-	        System.out.println("\n");
-	        
-	        String mejor = m.mejorJugadaConMesa(mesa.getMesa());
-	        System.out.println(" - Mejor jugada: " + mejor + " con " + m.mostrar_Cartas_Jugada());
-	        m.mostrarDraws();
-            
-            System.out.println("\n");
-            
-        	}
+
+                // Cartas jugador
+                for (int i = 0; i < cartasJugador.length(); i += 2) {
+                    char valor = cartasJugador.charAt(i);
+                    char palo = cartasJugador.charAt(i + 1);
+                    Palo p = Palo.valueOf(palo + "");
+                    cartas.add(new Carta(valor, p));
+                }
+
+                // Cartas comunes
+                for (int i = 0; i < cartasComunes.length(); i += 2) {
+                    char valor = cartasComunes.charAt(i);
+                    char palo = cartasComunes.charAt(i + 1);
+                    Palo p = Palo.valueOf(palo + "");
+                    cartas.add(new Carta(valor, p));
+                }
+
+                // Crear mano y evaluarla
+                Mano m = new Mano(cartas);
+
+                bw.write(l);
+                bw.newLine();
+                bw.write("- Best hand: " + m.mejorJugada() + " with " + m.mostrar_Cartas_Jugada());
+                bw.newLine();
+
+                // En ejercicio 2: si n < 5, mostramos draws
+                if (n < 5) {
+                    bw.write(m.mostrarDraws());
+                    bw.newLine();
+                }
+
+                bw.newLine();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-       
     }
 }

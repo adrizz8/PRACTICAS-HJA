@@ -1,7 +1,9 @@
 package Ejercicio1;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -17,8 +19,9 @@ public class ej1 {
 	public static void main(String[] args) {
         
 		String ruta = "src/Ejercicio1/entrada.txt";
+		String rutaSalida = "src/Ejercicio1/salida.txt";
 
-        try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ruta)); BufferedWriter bw = new BufferedWriter(new FileWriter(rutaSalida))) {
             String linea;
         	while ((linea = br.readLine()) != null) {
                 
@@ -62,11 +65,15 @@ public class ej1 {
             }
             
 	        Mano m = new Mano(cartas);
-            m.mostrarMano();
-            System.out.println(" - Mejor jugada: " + m.mejorJugada()+" con "+m.mostrar_Cartas_Jugada());
-            m.mostrarDraws();
+	        
+	        bw.write(l);
+	        bw.newLine();
+            bw.write(" - Best Hand: " + m.mejorJugada()+" with "+m.mostrar_Cartas_Jugada());
+            bw.newLine();
+            bw.write(m.mostrarDraws());
+            bw.newLine();
             
-            System.out.println("\n");
+            bw.newLine();
             
         	}
         } catch (IOException e) {
