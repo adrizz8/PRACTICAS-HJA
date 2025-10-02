@@ -14,14 +14,13 @@ import Clasesini.Carta;
 import Clasesini.Jugador;
 import Clasesini.Mano;
 import Clasesini.Palo;
-import simulator.model.Vehicle;
 
 public class ej3 {
 	
 
     public static void main(String[] args) {
 
-        String ruta = "src/Ejercicio3/entrada3.txt";
+        String ruta = "src/Ejercicio3/test3.txt";
         String rutaSalida = "src/Ejercicio3/salida3.txt";
 
         List<Jugador> Jugadores = new ArrayList<>();
@@ -92,14 +91,17 @@ public class ej3 {
                 
                 //Mostrar resultado para el jugador
                 for(int i = 0; i < N; i++) {
-                	bw.write(Jugadores.get(i).getId() + ":  "+ Jugadores.get(i).getMejorJugada() + " with " + Jugadores.get(i).getMano().mostrar_Cartas_Jugada());
+                	bw.write(Jugadores.get(i).getId() + ":  " + Jugadores.get(i).getMano().getString() + " " + Jugadores.get(i).getMejorJugada() + " with " + Jugadores.get(i).getMano().mostrar_Cartas_Jugada());
                 	bw.newLine();
                 }
+                
+                Jugadores.clear();
                 //System.out.println(id + ":  "+ mejor + " with " + m.mostrar_Cartas_Jugada());
                 //System.out.println(id + ":   " + m.mostrarMano() + "(" + m.mejorJugada() + ")");
                 
                 //bw.newLine();
 
+                
                 //System.out.println();
             }
         } catch (IOException e) {

@@ -5,6 +5,7 @@ import java.util.*;
 public class Mano {
 		
 	private List<Carta> _mano;
+	private List<Carta> _mano5;
 	private String _mejorJugada;
 	private ArrayList<String> _draws; // Lista de Draws, luego se muestran
 	
@@ -42,6 +43,20 @@ public class Mano {
 			System.out.print(c);
 		}
 		System.out.println();
+	}
+	
+	public String getString() {
+		String s = "";
+		if(esEscalera(_mano)) {
+			s = this.mostrar_Cartas_Jugada();
+		}
+		else {
+			for (Carta c : _mano5) {
+				s += c.toString();
+			}
+		}
+		
+		return s;
 	}
 
 	public boolean esColor(List<Carta> m) {
@@ -183,6 +198,39 @@ public class Mano {
 		boolean escalera = esEscalera(_mano);
 		boolean color = esColor(_mano);
 		HighCard_to_Poker();
+		
+		List<Carta> listaC = new ArrayList<>();
+		
+		if(color) {
+			for(int i = _mano.size(); listaC.size() < 5; i--) {
+				if(_mano.get(i - 1).getPalo() == _palo_color) {
+					listaC.add(_mano.get(i - 1));
+				}
+			}
+		}
+		
+		else {		
+			for(int i = 0; i < _cant_aux1 && listaC.size() < 5; i++) {
+				if(_mano.get(i).getValorNumerico() == _val_aux1) {
+					listaC.add(_mano.get(i));
+				}
+			}
+				
+			for(int j = 0; j < _cant_aux2 && listaC.size() < 5; j++) {
+				if(_mano.get(j).getValorNumerico() == _val_aux2) {
+					listaC.add(_mano.get(j));
+				}
+			}
+				
+			for(int k = _mano.size();listaC.size() < 5; k--) {
+				listaC.add(_mano.get(k - 1));
+			}		
+		}
+			
+		
+		_mano5 = listaC;
+		
+		
 
 		if (escalera && color) _mejorJugada = "Straight Flush";
 		else if (_cant_aux1 == 4) _mejorJugada = "Four of a Kind";
@@ -311,6 +359,11 @@ public class Mano {
 				valor = 8000;
 				break;
 				
+		}
+		
+		
+		if( _mejorJugada == "High Card" || _mejorJugada == "Pair" || _mejorJugada == "Two Pair" || _mejorJugada == "Three of a Kind") {
+			valor += (_val_aux1 * 50) * _cant_aux1;
 		}
 		
 		for (int i = 0; i < _mano.size(); i++) {
