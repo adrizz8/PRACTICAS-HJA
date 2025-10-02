@@ -73,17 +73,9 @@ public class ej3 {
 
                     // Crear mano
                     Mano m = new Mano(cartas);
-                    //m.mejorJugada();
                     Jugador jugador = new Jugador(id, m);
-                    // Mejor jugada
-                   // String mejor = m.mejorJugada();
                     
                     Jugadores.add(jugador);
-                    
-                    //bw.write(id + ":  "+ mejor + " with " + m.mostrar_Cartas_Jugada());
-                    //bw.newLine();
-                    
-
                    
                 }
                 
@@ -96,13 +88,6 @@ public class ej3 {
                 }
                 
                 Jugadores.clear();
-                //System.out.println(id + ":  "+ mejor + " with " + m.mostrar_Cartas_Jugada());
-                //System.out.println(id + ":   " + m.mostrarMano() + "(" + m.mejorJugada() + ")");
-                
-                //bw.newLine();
-
-                
-                //System.out.println();
             }
         } catch (IOException e) {
             e.printStackTrace();
