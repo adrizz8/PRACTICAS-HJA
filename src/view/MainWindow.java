@@ -96,8 +96,7 @@ public class MainWindow extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             MainWindow gui = new MainWindow();
-            // Ejemplo de cómo poner fondo (puedes cambiar la ruta)
-            // gui.setFondo("src/imagenes/fondo.jpg");
+            gui.setFondo("resources/icons/fondoInicial.png");
             gui.setVisible(true);
         });
     }

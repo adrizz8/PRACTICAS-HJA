@@ -4,6 +4,13 @@ import java.util.Random;
 
 public class CartaAleatoriaImagen {
 	
+	private static final int NUM_CARTAS = 52;
+	
+	//si la carta ya ha salido su posicion en el switch, que sera la que
+	//tenga en el array sera puesta como false
+	//TRUE --> CARTA OPERATIVA, FALSA --> CARTA NO OPERATIVA
+	private boolean[] cartasOperativas  = new boolean[NUM_CARTAS];
+	
 	public CartaAleatoriaImagen() { }
 	
 	public String eleccionCartaAleatoriaImagen(int numero) {
@@ -109,6 +116,13 @@ public class CartaAleatoriaImagen {
 	
 	public int getRandomNumber() {
 		Random random = new Random();
-        return random.nextInt(52) + 1;
+		int i = 0;
+		do {
+			i = random.nextInt(NUM_CARTAS);
+		} while(this.cartasOperativas[i]);
+		
+		this.cartasOperativas[i] = true;
+		
+        return i + 1;
     }
 }
