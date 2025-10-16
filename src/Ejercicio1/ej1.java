@@ -8,9 +8,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import Clasesini.Carta;
-import Clasesini.Mano;
-import Clasesini.Palo;
+import model.Carta;
+import model.Mano;
+import model.Palo;
 
 public class ej1 {
 	
@@ -36,21 +36,7 @@ public class ej1 {
             	 valor =linea.charAt(i);
             	 palo = linea.charAt(i + 1);
             	 
-            	 if (palo == 'h') {
-            		 p = Palo.h;
-            	 }
-            	 
-            	 else if (palo == 'd') {
-            		 p = Palo.d;
-            	 }
-            	 
-            	 else if (palo == 's') {
-            		 p = Palo.s;
-            	 }
-            	 
-            	 else if (palo == 'c') {
-            		 p = Palo.c;
-            	 }
+            	 p=Palo.valueOf(palo+"");
             	 
             	 Carta c = new Carta(valor,p);
             	
@@ -60,7 +46,11 @@ public class ej1 {
             
 	        Mano m = new Mano(cartas);
             m.mostrarMano();
-            System.out.println("Mejor jugada: " + m.mejorJugada());
+            System.out.println(" - Mejor jugada: " + m.mejorJugada()+" con "+ m.mostrar_Cartas_Jugada());
+            m.mostrarDraws();
+            
+            System.out.println("\n");
+            
         	}
         } catch (IOException e) {
             e.printStackTrace();
