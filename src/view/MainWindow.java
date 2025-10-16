@@ -14,6 +14,7 @@ public class MainWindow extends JFrame {
     private JButton btnUsuario;
     private FondoPanel fondoPanel;
     private PokerTableAbsoluteRandom _pokerTableAbsoluteRandom;
+    private PokerTableAbsoluteChoise _pokerTableAbsoluteChoice;
 
     public MainWindow() {
         // Configuración de la ventana
@@ -60,8 +61,8 @@ public class MainWindow extends JFrame {
         btnUsuario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: lógica para jugar con cartas del usuario
-                // pedirCartasUsuario();
+            	_pokerTableAbsoluteChoice = new PokerTableAbsoluteChoise();
+            	setVisible(false);
             }
         });
     }
