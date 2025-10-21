@@ -1,5 +1,7 @@
 package model;
 
+import model.Palo;
+
 public class Carta {
 	
 	
@@ -10,13 +12,38 @@ public class Carta {
 		this.valor = v;
 		this.palo = p;
 	}
-
+	
+	public Carta(int v, Palo p) {
+		setValor(v);
+		this.palo = p;
+	}
+	
 	public char getValor() {
 		return valor;
 	}
 
 	public void setValor(char valor) {
 		this.valor = valor;
+	}
+	
+	//Sobrecarga de setValor()
+	public void setValor(int valor) {
+			switch(valor) {
+			case 2 : this.valor = '2'; break;
+			case 3 : this.valor = '3'; break;
+			case 4 : this.valor = '4'; break;
+			case 5 : this.valor = '5'; break;
+			case 6 : this.valor = '6'; break;
+			case 7 : this.valor = '7'; break;
+			case 8 : this.valor = '8'; break;
+			case 9 : this.valor = '9'; break;
+			case 10 : this.valor = 'T'; break;
+			case 11 : this.valor = 'J'; break;
+			case 12 : this.valor = 'Q'; break;
+			case 13 : this.valor = 'K'; break;
+			case 14 : this.valor = 'A'; break;
+		
+		}
 	}
 
 	public Palo getPalo() {

@@ -6,6 +6,7 @@ import model.Carta;
 import model.CartaAleatoria;
 import model.CartaAleatoriaImagen;
 import model.Mano;
+import model.Mesa;
 
 import java.awt.*;
 import java.io.File;
@@ -65,20 +66,25 @@ public class PokerTableAbsoluteRandom extends JFrame {
     }
 
     private JPanel createPlayerPanel(String name) {
+    	//Crea mesa con todas las cartas
+    	Mesa m = new Mesa();
+    	
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         panel.setBackground(new Color(34, 139, 34));
         panel.setBorder(BorderFactory.createTitledBorder(name));
 
         ArrayList<Carta> cartasJugador1 = new ArrayList<Carta>();
-        String nombre = null;
+        
+        
         for(int i = 0; i < 2; i++)  {
-        int num = this._cartaAleatoriaImagen.getRandomNumber(); //generamos numero aleatorio
-        nombre = this._cartaAleatoriaImagen.eleccionCartaAleatoriaImagen(num); //elige la carta aleatoria
-        cartasJugador1.add(this._cartaAleatoria.eleccionCartaAleatoria(nombre));
+        	
+        //Coge una carta aleatoria de la mesa la quita
+        Carta carta = m.getRandom();
+        cartasJugador1.add(carta);
         
         // Dos cartas (puedes reemplazarlas por imágenes reales)
-        JLabel c = new JLabel(new ImageIcon(loadImage(nombre)));
+        JLabel c = new JLabel(new ImageIcon(loadImage(carta.toString() + ".png")));
         c.setFont(new Font("SansSerif", Font.PLAIN, 36));
         c.setBounds(0, 0, panel.getWidth(), panel.getHeight());
         panel.add(c);
