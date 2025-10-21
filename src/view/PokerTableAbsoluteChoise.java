@@ -29,7 +29,7 @@ public class PokerTableAbsoluteChoise extends JFrame {
         JPanel player2 = createPlayerPanel("Jugador 2");
         JPanel player3 = createPlayerPanel("Jugador 3");
         JPanel player4 = createPlayerPanel("Jugador 4");
-        JPanel player5 = createPlayerPanel("Jugador 5");
+        JPanel player5 = createPlayerPanel("Hero");
         JPanel player6 = createPlayerPanel("Jugador 6");
 
         // Posiciones manuales
