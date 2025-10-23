@@ -33,12 +33,12 @@ public class PokerTable extends JFrame {
         getContentPane().setBackground(new Color(0, 100, 0)); // verde tipo mesa
 
         // Crear paneles de jugadores    
-        JPanel player1 = createPlayerPanel("", _ctrl.getCartasJugador(0));
-        JPanel player2 = createPlayerPanel("", _ctrl.getCartasJugador(1));
-        JPanel player3 = createPlayerPanel("", _ctrl.getCartasJugador(2));
-        JPanel player4 = createPlayerPanel("", _ctrl.getCartasJugador(3));
-        JPanel player5 = createPlayerPanel("", _ctrl.getCartasJugador(4));
-        JPanel player6 = createPlayerPanel("", _ctrl.getCartasJugador(5));
+        JPanel player1 = createPlayerPanel("Jugador 1", _ctrl.getCartasJugador(0));
+        JPanel player2 = createPlayerPanel("Jugador 2", _ctrl.getCartasJugador(1));
+        JPanel player3 = createPlayerPanel("Jugador 3", _ctrl.getCartasJugador(2));
+        JPanel player4 = createPlayerPanel("Jugador 4", _ctrl.getCartasJugador(3));
+        JPanel player5 = createPlayerPanel("Hero", _ctrl.getCartasJugador(4));
+        JPanel player6 = createPlayerPanel("Jugador 6", _ctrl.getCartasJugador(5));
 
         // 🔹 Posiciones manuales (rectángulo)
         player1.setBounds(350, 30, 150, 100);   // arriba centro

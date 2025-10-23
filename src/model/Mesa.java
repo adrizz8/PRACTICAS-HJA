@@ -42,9 +42,6 @@ public class Mesa {
 	}
 	
 	
-	
-	
-	
 	private void initCartas() {
 		Palo[] palos = Palo.values();
 		
@@ -59,8 +56,6 @@ public class Mesa {
 			addJugadorRandom(isRandom);
 		}
 	}
-	
-	
 	
 	
 }
