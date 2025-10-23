@@ -51,7 +51,7 @@ public class PokerTable extends JFrame {
         // 🔹 Panel central (mesa)
         JPanel table = new JPanel();
         table.setBackground(new Color(0, 128, 0));
-        table.setBorder(BorderFactory.createTitledBorder(""));
+        table.setBorder(BorderFactory.createTitledBorder("Mesa"));
         table.setBounds(280, 180, 300, 200);
 
         // Añadir todos los elementos
