@@ -1,6 +1,9 @@
 package view;
 
 import javax.swing.*;
+
+import control.Controller;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -10,14 +13,27 @@ public class MainWindow extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private Controller _ctrl;
+    private PokerTable _pokerTable;
+    private boolean isRandom;
+    
+    
+    //GUI
 	private JButton btnRandom;
     private JButton btnUsuario;
     private FondoPanel fondoPanel;
-    private PokerTableAbsoluteRandom _pokerTableAbsoluteRandom;
+    
 
-    public MainWindow() {
-        // Configuración de la ventana
-        setTitle("Mesa Póker");
+    public MainWindow(Controller ctrl) {
+    	super("Mesa Póker");
+    	_ctrl = ctrl;
+    	initGUI();
+    }
+    
+    public void initGUI() {
+    	// Configuración de la ventana
+        //setTitle("Mesa Póker");
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centrar la ventana
@@ -52,7 +68,9 @@ public class MainWindow extends JFrame {
         btnRandom.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	_pokerTableAbsoluteRandom = new PokerTableAbsoluteRandom();
+            	isRandom = true;
+            	_ctrl.initJugadores(isRandom);
+            	_pokerTable = new PokerTable(_ctrl);
             	setVisible(false);
             }
         });
@@ -64,6 +82,7 @@ public class MainWindow extends JFrame {
                 // pedirCartasUsuario();
             }
         });
+        this.setVisible(true);
     }
 
     /**
@@ -93,11 +112,5 @@ public class MainWindow extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            MainWindow gui = new MainWindow();
-            gui.setFondo("resources/icons/fondoInicial.png");
-            gui.setVisible(true);
-        });
-    }
+    
 }

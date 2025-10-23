@@ -2,6 +2,8 @@ package view;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import control.Controller;
+import misc.Pair;
 import model.Carta;
 import model.CartaAleatoria;
 import model.CartaAleatoriaImagen;
@@ -13,30 +15,30 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class PokerTableAbsoluteRandom extends JFrame {
+public class PokerTable extends JFrame {
 	
-	private CartaAleatoriaImagen _cartaAleatoriaImagen;
-	private CartaAleatoria _cartaAleatoria;
-	private ArrayList<Carta> _listaCartas;
-
-    public PokerTableAbsoluteRandom() {
-    	this._cartaAleatoria = new CartaAleatoria();
-    	this._cartaAleatoriaImagen = new CartaAleatoriaImagen();
-    	
-        setTitle("Mesa de Póker "); 
+	private Controller _ctrl;
+	
+    public PokerTable(Controller ctrl) {
+    	super("Mesa de Poker");
+    	_ctrl = ctrl;
+    	initGUI();     
+    }
+    
+    private void initGUI() {
+    	//setTitle("Mesa de Póker"); 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 600);
         setLayout(null); // 🔹 AbsoluteLayout
         getContentPane().setBackground(new Color(0, 100, 0)); // verde tipo mesa
 
         // Crear paneles de jugadores    
-        
-        JPanel player1 = createPlayerPanel("");
-        JPanel player2 = createPlayerPanel("");
-        JPanel player3 = createPlayerPanel("");
-        JPanel player4 = createPlayerPanel("");
-        JPanel player5 = createPlayerPanel("");
-        JPanel player6 = createPlayerPanel("");
+        JPanel player1 = createPlayerPanel("", _ctrl.getCartasJugador(0));
+        JPanel player2 = createPlayerPanel("", _ctrl.getCartasJugador(1));
+        JPanel player3 = createPlayerPanel("", _ctrl.getCartasJugador(2));
+        JPanel player4 = createPlayerPanel("", _ctrl.getCartasJugador(3));
+        JPanel player5 = createPlayerPanel("", _ctrl.getCartasJugador(4));
+        JPanel player6 = createPlayerPanel("", _ctrl.getCartasJugador(5));
 
         // 🔹 Posiciones manuales (rectángulo)
         player1.setBounds(350, 30, 150, 100);   // arriba centro
@@ -65,33 +67,28 @@ public class PokerTableAbsoluteRandom extends JFrame {
         setVisible(true);
     }
 
-    private JPanel createPlayerPanel(String name) {
+    private JPanel createPlayerPanel(String name, Pair<Carta> cartas) {
     	//Crea mesa con todas las cartas
-    	Mesa m = new Mesa();
-    	
+
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         panel.setBackground(new Color(34, 139, 34));
-        panel.setBorder(BorderFactory.createTitledBorder(name));
-
-        ArrayList<Carta> cartasJugador1 = new ArrayList<Carta>();
-        
-        
-        for(int i = 0; i < 2; i++)  {
+        panel.setBorder(BorderFactory.createTitledBorder(name));      
         	
-        //Coge una carta aleatoria de la mesa la quita
-        Carta carta = m.getRandom();
-        cartasJugador1.add(carta);
+        //Muestra la primera carta
+        Carta carta1 = cartas.getFirst();
+        Carta carta2 = cartas.getSecond();
         
-        // Dos cartas (puedes reemplazarlas por imágenes reales)
-        JLabel c = new JLabel(new ImageIcon(loadImage(carta.toString() + ".png")));
+        //Muestra al carta
+        JLabel c = new JLabel(new ImageIcon(loadImage(carta1.toString() + ".png")));
+        JLabel c2 = new JLabel(new ImageIcon(loadImage(carta2.toString() + ".png")));
         c.setFont(new Font("SansSerif", Font.PLAIN, 36));
         c.setBounds(0, 0, panel.getWidth(), panel.getHeight());
+        c2.setFont(new Font("SansSerif", Font.PLAIN, 36));
+        c2.setBounds(0, 0, panel.getWidth(), panel.getHeight());
         panel.add(c);
-        }
-        
-        Mano manoJugador = new Mano(cartasJugador1); //?????????????
-     
+        panel.add(c2);
+            
 
         return panel;
     }
