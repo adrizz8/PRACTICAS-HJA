@@ -87,42 +87,93 @@ public class PokerTable extends JFrame {
         Carta carta1 = cartas.getFirst();
         Carta carta2 = cartas.getSecond();
 
-        // Crea las imágenes de las cartas
-        // Cargamos las imágenes y las escalamos si son muy altas para evitar cortes
+        // Carga y escala las imágenes
         Image img1 = loadImage(carta1.toString() + ".png");
         Image img2 = loadImage(carta2.toString() + ".png");
-        int maxCardHeight = 80; // altura máxima deseada para las cartas
+        int maxCardHeight = 80;
         ImageIcon icon1 = toScaledIcon(img1, maxCardHeight);
         ImageIcon icon2 = toScaledIcon(img2, maxCardHeight);
         JLabel c1 = new JLabel(icon1);
         JLabel c2 = new JLabel(icon2);
-         playerPanel.add(c1);
-         playerPanel.add(c2);
+        playerPanel.add(c1);
+        playerPanel.add(c2);
 
-         // Campo de texto para equity (debajo del panel del jugador)
-         JTextField equityField = new JTextField("Equity: 0.0%");
-         equityField.setEditable(false);
-         equityField.setHorizontalAlignment(JTextField.CENTER);
-         equityField.setFont(new Font("SansSerif", Font.BOLD, 12));
-         equityField.setBackground(new Color(240, 240, 240));
-         equityField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        // Campo de texto para equity (idéntico al que ya tenías)
+        JTextField equityField = new JTextField("Equity: 0.0%");
+        equityField.setEditable(false);
+        equityField.setHorizontalAlignment(JTextField.CENTER);
+        equityField.setFont(new Font("SansSerif", Font.BOLD, 12));
+        equityField.setBackground(new Color(240, 240, 240));
+        equityField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-         // Panel contenedor que coloca el panel del jugador arriba y el equity debajo
-         JPanel container = new JPanel();
-         container.setLayout(new BorderLayout());
-         container.setBackground(new Color(34, 139, 34));
+        // Contenedor principal igual que antes
+        JPanel container = new JPanel();
+        container.setLayout(new BorderLayout());
+        container.setBackground(new Color(34, 139, 34));
+        container.add(playerPanel, BorderLayout.CENTER);
+        container.add(equityField, BorderLayout.SOUTH);
 
-         container.add(playerPanel, BorderLayout.CENTER);
-         container.add(equityField, BorderLayout.SOUTH);
+        // 🔹 Solo si es el Hero, añadimos los cuadros de rango
+        if (name.equalsIgnoreCase("Hero")) {
+            // Subpanel vertical para equity + rangos
+            JPanel bottomPanel = new JPanel();
+            bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+            bottomPanel.setBackground(new Color(34, 139, 34));
 
-         // Ajustar tamaño preferido del contenedor según el tamaño real de las cartas + campo equity
-         Dimension pPref = playerPanel.getPreferredSize();
-         Dimension ePref = equityField.getPreferredSize();
-         int pad = 16; // margen extra para el título/borde
-         container.setPreferredSize(new Dimension(pPref.width + pad, pPref.height + ePref.height + pad));
+            // Añadimos el equity al subpanel
+            bottomPanel.add(equityField);
+            bottomPanel.add(Box.createVerticalStrut(4));
 
-         return container;
-     }
+            // Campo texto de rango manual
+            JTextField rangeTextField = new JTextField();
+            rangeTextField.setToolTipText("Introduce rango (ej: AKs+, 88+, A5s-A2s)");
+            rangeTextField.setFont(new Font("SansSerif", Font.PLAIN, 12));
+
+            // Campo texto de porcentaje
+            JTextField rangePercentField = new JTextField();
+            rangePercentField.setToolTipText("Introduce % del rango (ej: 25)");
+            rangePercentField.setFont(new Font("SansSerif", Font.PLAIN, 12));
+
+            // Mutual exclusión
+            rangeTextField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+                void toggle() {
+                    boolean hasText = !rangeTextField.getText().trim().isEmpty();
+                    rangePercentField.setEnabled(!hasText);
+                }
+                public void insertUpdate(javax.swing.event.DocumentEvent e) { toggle(); }
+                public void removeUpdate(javax.swing.event.DocumentEvent e) { toggle(); }
+                public void changedUpdate(javax.swing.event.DocumentEvent e) { toggle(); }
+            });
+
+            rangePercentField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+                void toggle() {
+                    boolean hasText = !rangePercentField.getText().trim().isEmpty();
+                    rangeTextField.setEnabled(!hasText);
+                }
+                public void insertUpdate(javax.swing.event.DocumentEvent e) { toggle(); }
+                public void removeUpdate(javax.swing.event.DocumentEvent e) { toggle(); }
+                public void changedUpdate(javax.swing.event.DocumentEvent e) { toggle(); }
+            });
+
+            // Añadimos los dos campos al subpanel
+            bottomPanel.add(rangeTextField);
+            bottomPanel.add(Box.createVerticalStrut(2));
+            bottomPanel.add(rangePercentField);
+
+            // Sustituimos solo la parte inferior (equity + rangos)
+            container.remove(equityField);
+            container.add(bottomPanel, BorderLayout.SOUTH);
+        }
+
+        // Tamaño preferido original (no tocamos nada)
+        Dimension pPref = playerPanel.getPreferredSize();
+        Dimension ePref = equityField.getPreferredSize();
+        int pad = 16;
+        container.setPreferredSize(new Dimension(pPref.width + pad, pPref.height + ePref.height + pad));
+
+        return container;
+    }
+
 
     // Helper que convierte una Image en ImageIcon escalada manteniendo proporción.
     private ImageIcon toScaledIcon(Image img, int maxHeight) {
