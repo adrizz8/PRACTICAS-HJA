@@ -35,8 +35,12 @@ public class Mesa {
 	
 	
 	private void addJugadorRandom(boolean random) {
+		Pair hCards;
 		if(random) {
-			Pair<Carta> hCards = new Pair<Carta>(getRandom(), getRandom());
+			hCards = new Pair(getRandom(), getRandom());
+			listaJugadores.add(new Jugador(this, hCards));
+		}else {
+			hCards= new Pair(new Carta(), new Carta());	
 			listaJugadores.add(new Jugador(this, hCards));
 		}
 	}
@@ -45,9 +49,11 @@ public class Mesa {
 	private void initCartas() {
 		Palo[] palos = Palo.values();
 		
-		for(int i = 0; i < 52; i++) {
-			Carta c = new Carta(i % 13 + 2, palos[i % 4]);
-			listaCartas.add(c);
+		for (int p = 0; p < 4; p++) {            
+		    for (int v = 2; v <= 14; v++) {     
+		        Carta c = new Carta(v, palos[p]);
+		        listaCartas.add(c);
+		    }
 		}
 	}
 	
@@ -55,6 +61,28 @@ public class Mesa {
 		for(int i = 0; i < NUM_JUGADORES; i++) {
 			addJugadorRandom(isRandom);
 		}
+	}
+
+	public List<Carta> getlistaCartas() {
+		// TODO Auto-generated method stub
+		return listaCartas;
+	}
+
+	public void modificarJugador(int jugador, int i, String nueva_ruta, String vieja_ruta) {
+		// TODO Auto-generated method stub
+		Carta nueva_carta=CartaAleatoria.eleccionCartaAleatoria(nueva_ruta);
+	
+		String texto_nueva_carta=nueva_carta.toString();
+		for(int j=0;j<listaCartas.size();j++) {
+			if(listaCartas.get(j).toString().equalsIgnoreCase(texto_nueva_carta))
+				listaCartas.remove(j);
+		}
+		if(!"0h.png".equalsIgnoreCase(vieja_ruta))
+			listaCartas.add(CartaAleatoria.eleccionCartaAleatoria(vieja_ruta));
+		if(i==0)
+			listaJugadores.get(jugador).setCarta1(nueva_carta);
+		else
+			listaJugadores.get(jugador).setCarta2(nueva_carta);
 	}
 	
 	

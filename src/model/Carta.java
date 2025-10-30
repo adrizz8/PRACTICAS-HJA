@@ -1,12 +1,15 @@
 package model;
 
-import model.Palo;
-
 public class Carta {
 	
 	
 	private char valor;
 	private Palo palo;
+	
+	public Carta() {
+		this.valor='0';
+		this.palo=Palo.h;
+	}
 	
 	public Carta(char v, Palo p) {
 		this.valor = v;
@@ -16,6 +19,11 @@ public class Carta {
 	public Carta(int v, Palo p) {
 		setValor(v);
 		this.palo = p;
+	}
+	
+	public Carta(String string) {
+		this.valor = string.charAt(0);
+		this.palo = Palo.valueOf(string.substring(1));
 	}
 	
 	public char getValor() {

@@ -79,7 +79,11 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO: lógica para jugar con cartas del usuario
-                // pedirCartasUsuario();
+                // pedirCartasUsuario()
+            	isRandom = false;
+            	_ctrl.initJugadores(isRandom);
+            	_pokerTable = new PokerTable(_ctrl);
+            	setVisible(false);
             }
         });
         this.setVisible(true);
