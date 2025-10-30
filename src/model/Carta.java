@@ -1,7 +1,5 @@
 package model;
 
-import model.Palo;
-
 public class Carta {
 	
 	
@@ -17,6 +15,13 @@ public class Carta {
 		setValor(v);
 		this.palo = p;
 	}
+	
+	public Carta(String string) {
+		this.valor = string.charAt(0);
+		this.palo = Palo.valueOf(string.substring(1));
+	}
+	
+	
 	
 	public char getValor() {
 		return valor;
@@ -58,7 +63,6 @@ public class Carta {
 	public String toString() {
 	    return valor + "" + palo;
 	}
-	
 	
 	//Este método convierte el char del valor en un valor numérico para compararlo de manera más sencilla
 	public Integer getValorNumerico() {

@@ -36,7 +36,7 @@ public class Mesa {
 	
 	private void addJugadorRandom(boolean random) {
 		if(random) {
-			Pair<Carta> hCards = new Pair<Carta>(getRandom(), getRandom());
+			Pair hCards = new Pair(getRandom(), getRandom());
 			listaJugadores.add(new Jugador(this, hCards));
 		}
 	}

@@ -1,5 +1,8 @@
 package control;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import misc.Pair;
 import model.Carta;
 import model.Mesa;
@@ -19,7 +22,22 @@ public class Controller {
 		mesa.initJugadores(isRandom);
 	}
 	
-	public Pair<Carta> getCartasJugador(int index) {
+	public Pair getCartasJugador(int index) {
 		return mesa.getJugador(index).getCartas();
+	}
+	
+	//pu
+	public boolean test() {
+		
+		List<String> list = new ArrayList<String>();
+		
+		list.add("AA");
+		list.add("JJ");
+		list.add("ATs-A8s");
+		list.add("76o+");
+		list.add("54o");
+		
+		
+		return mesa.getJugador(0).enRango(list);
 	}
 }

@@ -5,8 +5,6 @@ import javax.swing.*;
 import control.Controller;
 import misc.Pair;
 import model.Carta;
-import model.CartaAleatoria;
-import model.CartaAleatoriaImagen;
 import model.Mano;
 import model.Mesa;
 
@@ -23,7 +21,7 @@ public class PokerTable extends JFrame {
     public PokerTable(Controller ctrl) {
     	super("Mesa de Poker");
     	_ctrl = ctrl;
-    	initGUI();     
+    	initGUI();  
     }
     
     private void initGUI() {
@@ -40,7 +38,7 @@ public class PokerTable extends JFrame {
         JPanel player4 = createPlayerPanel("Jugador 4", _ctrl.getCartasJugador(3));
         JPanel player5 = createPlayerPanel("Hero", _ctrl.getCartasJugador(4));
         JPanel player6 = createPlayerPanel("Jugador 6", _ctrl.getCartasJugador(5));
-
+        _ctrl.test();
         // 🔹 Posiciones manuales (rectángulo)
         // Use los tamaños preferidos de cada contenedor para no cortar las cartas
         Dimension d1 = player1.getPreferredSize();
@@ -76,7 +74,7 @@ public class PokerTable extends JFrame {
         setVisible(true);
     }
 
-    private JPanel createPlayerPanel(String name, Pair<Carta> cartas) {
+    private JPanel createPlayerPanel(String name, Pair cartas) {
         // Panel interno con las cartas y el borde con el nombre del jugador
         JPanel playerPanel = new JPanel();
         playerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
@@ -129,6 +127,8 @@ public class PokerTable extends JFrame {
             rangeTextField.setToolTipText("Introduce rango (ej: AKs+, 88+, A5s-A2s)");
             rangeTextField.setFont(new Font("SansSerif", Font.PLAIN, 12));
 
+            
+            
             // Campo texto de porcentaje
             JTextField rangePercentField = new JTextField();
             rangePercentField.setToolTipText("Introduce % del rango (ej: 25)");
