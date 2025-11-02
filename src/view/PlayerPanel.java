@@ -29,6 +29,9 @@ public class PlayerPanel extends JPanel{
 	private String name;
 	private Controller _ctrl;
 	private JFrame padre;
+	private JTextField equityField;
+	
+	
 	
 	public PlayerPanel (int jugador,String name, Controller ctrl,JFrame padre){
 		this.padre=padre;
@@ -38,6 +41,10 @@ public class PlayerPanel extends JPanel{
 		this.cartas=_ctrl.getCartasJugador(jugador);
 		initP();
 		
+	}
+	
+	public void setEquity(double equity) {
+	    equityField.setText(String.format("Equity: %.1f%%", equity));
 	}
 	
 	private void initP() {
@@ -100,7 +107,7 @@ public class PlayerPanel extends JPanel{
         });
         
         // Campo de texto para equity (idéntico al que ya tenías)
-        JTextField equityField = new JTextField("Equity: 0.0%");
+        equityField = new JTextField("Equity: 0.0%");
         equityField.setEditable(false);
         equityField.setHorizontalAlignment(JTextField.CENTER);
         equityField.setFont(new Font("SansSerif", Font.BOLD, 12));

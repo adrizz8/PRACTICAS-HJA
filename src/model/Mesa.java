@@ -34,6 +34,7 @@ public class Mesa {
 	}
 	
 	
+	
 	private void addJugadorRandom(boolean random) {
 		Pair hCards;
 		if(random) {
@@ -83,6 +84,10 @@ public class Mesa {
 			listaJugadores.get(jugador).setCarta1(nueva_carta);
 		else
 			listaJugadores.get(jugador).setCarta2(nueva_carta);
+	}
+	
+	public List<Jugador> getListaJugadores(){
+		return listaJugadores;
 	}
 	
 	

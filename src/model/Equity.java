@@ -2,7 +2,7 @@ package model;
 
 import java.util.*;
 
-public class EquityCalculator {
+public class Equity {
 
     private static final int NUM_SIMULACIONES = 5000;
 
@@ -10,7 +10,7 @@ public class EquityCalculator {
         Map<Jugador, Integer> victorias = new HashMap<>();
         Map<Jugador, Integer> empates = new HashMap<>();
 
-        List<Jugador> jugadores = mesa.getNumJugadores();
+        List<Jugador> jugadores = mesa.getListaJugadores();
         List<Carta> barajaRestante = new ArrayList<>(mesa.getlistaCartas());
 
         for (Jugador j : jugadores) {
