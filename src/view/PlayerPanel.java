@@ -7,9 +7,13 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,7 +29,7 @@ public class PlayerPanel extends JPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 	private int jugador;
-	private Pair<Carta> cartas;
+	private Pair cartas;
 	private String name;
 	private Controller _ctrl;
 	private JFrame padre;
@@ -124,11 +128,23 @@ public class PlayerPanel extends JPanel{
             bottomPanel.add(equityField);
             bottomPanel.add(Box.createVerticalStrut(4));
 
+            JPanel panelRangoText= new JPanel();
+            JPanel panelRangoPercent= new JPanel();
+            panelRangoText.setLayout(new BoxLayout(panelRangoText, BoxLayout.X_AXIS));
+            panelRangoPercent.setLayout(new BoxLayout(panelRangoPercent, BoxLayout.X_AXIS));
+
+            JButton botonText= new JButton(toScaledIcon(loadImage("update.png"),20));
+            JButton botonPercent= new JButton(toScaledIcon(loadImage("update.png"),20));
+            
+         
+            botonText.setMargin(new Insets(0, 0, 0, 0));
+            botonPercent.setMargin(new Insets(0, 0, 0, 0));
+            
             // Campo texto de rango manual
             JTextField rangeTextField = new JTextField();
             rangeTextField.setToolTipText("Introduce rango (ej: AKs+, 88+, A5s-A2s)");
             rangeTextField.setFont(new Font("SansSerif", Font.PLAIN, 12));
-
+            
             // Campo texto de porcentaje
             JTextField rangePercentField = new JTextField();
             rangePercentField.setToolTipText("Introduce % del rango (ej: 25)");
@@ -139,7 +155,7 @@ public class PlayerPanel extends JPanel{
                 void toggle() {
                     boolean hasText = !rangeTextField.getText().trim().isEmpty();
                     rangePercentField.setEnabled(!hasText);
-                }
+                }     
                 public void insertUpdate(javax.swing.event.DocumentEvent e) { toggle(); }
                 public void removeUpdate(javax.swing.event.DocumentEvent e) { toggle(); }
                 public void changedUpdate(javax.swing.event.DocumentEvent e) { toggle(); }
@@ -152,13 +168,53 @@ public class PlayerPanel extends JPanel{
                 }
                 public void insertUpdate(javax.swing.event.DocumentEvent e) { toggle(); }
                 public void removeUpdate(javax.swing.event.DocumentEvent e) { toggle(); }
-                public void changedUpdate(javax.swing.event.DocumentEvent e) { toggle(); }
+                public void changedUpdate(javax.swing.event.DocumentEvent e) { toggle(); }    
             });
+            
+            botonText.addActionListener(e->{
+            	
+            	boolean invalido=false;
+            	String texto=rangeTextField.getText();	
+            	String[] rangos= texto.split(",");
+            	List<String> strings= new ArrayList<String>();
+            	
+            	int i = 0;
+            	while (i < rangos.length && !invalido) {
+            	    String rango = rangos[i];
 
+            	    if (esRangoValido(rango)) 
+            	        strings.add(rango);
+            	    else
+            	        invalido = true;
+
+            	    i++;
+            	}
+            	
+            	if(!invalido) 	
+            		
+            		if(_ctrl.enRango(jugador, strings)) {
+            			rangeTextField.setBackground(Color.GREEN);
+            		}else {
+            			rangeTextField.setBackground(Color.RED);
+            		}
+            	else
+            	    JOptionPane.showMessageDialog(null, "Rango Inválido");
+ 	
+            });
+            
+            
+            panelRangoText.add(botonText);
+            panelRangoText.add(Box.createHorizontalStrut(2));
+            panelRangoText.add(rangeTextField);
+            
+            panelRangoPercent.add(botonPercent);
+            panelRangoPercent.add(Box.createHorizontalStrut(2));
+            panelRangoPercent.add(rangePercentField);           
+            
             // Añadimos los dos campos al subpanel
-            bottomPanel.add(rangeTextField);
+            bottomPanel.add(panelRangoText);
             bottomPanel.add(Box.createVerticalStrut(2));
-            bottomPanel.add(rangePercentField);
+            bottomPanel.add(panelRangoPercent);
 
             // Sustituimos solo la parte inferior (equity + rangos)
             this.remove(equityField);
@@ -174,6 +230,40 @@ public class PlayerPanel extends JPanel{
 	
 	
 	
+	private boolean esRangoValido(String rango) {
+		// TODO Auto-generated method stub
+		boolean valido=true;
+
+		int num_caracteres=rango.length();	
+		if(num_caracteres<2) {
+			valido =false;
+		}
+		else if(num_caracteres==2) {	
+			if (!rango.matches("([AKQJT2-9])\\1")) 
+				valido=false;	
+		}
+		else if(num_caracteres==3) {
+			if(!rango.matches("[AKQJT2-9][AKQJT2-9][os+]")) 
+				valido=false;
+		}
+		else if(num_caracteres==4) {
+			if(!rango.matches("[AKQJT2-9][AKQJT2-9][os][+]")) 
+				valido=false;
+		}
+		else if(num_caracteres==5) {
+			if(!rango.matches("([AKQJT2-9])\\1[-]([AKQJT2-9])\\2")) 
+				valido=false;
+		}
+		else if(num_caracteres==7) {
+			if(!rango.matches("[AKQJT2-9][AKQJT2-9][o][-][AKQJT2-9][AKQJT2-9][o]")&&!rango.matches("[AKQJT2-9][AKQJT2-9][s][-][AKQJT2-9][AKQJT2-9][s]")) 
+				valido=false;	
+		}else {
+			valido=false;
+		}
+		
+		return valido;
+	}
+
 	// Helper que convierte una Image en ImageIcon escalada manteniendo proporción.
     private ImageIcon toScaledIcon(Image img, int maxHeight) {
         if (img == null) {
@@ -210,4 +300,7 @@ public class PlayerPanel extends JPanel{
 		}
 		return i;
 	}
+    
+    
+    
 }

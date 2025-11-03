@@ -21,6 +21,11 @@ public class Carta {
 		this.palo = p;
 	}
 	
+	public Carta(String string) {
+		this.valor = string.charAt(0);
+		this.palo = Palo.valueOf(string.substring(1));
+	}
+	
 	public char getValor() {
 		return valor;
 	}

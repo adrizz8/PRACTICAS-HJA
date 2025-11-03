@@ -35,12 +35,12 @@ public class Mesa {
 	
 	
 	private void addJugadorRandom(boolean random) {
-		Pair<Carta> hCards;
+		Pair hCards;
 		if(random) {
-			hCards = new Pair<Carta>(getRandom(), getRandom());
+			hCards = new Pair(getRandom(), getRandom());
 			listaJugadores.add(new Jugador(this, hCards));
 		}else {
-			hCards= new Pair<Carta>(new Carta(), new Carta());	
+			hCards= new Pair(new Carta(), new Carta());	
 			listaJugadores.add(new Jugador(this, hCards));
 		}
 	}
@@ -83,6 +83,11 @@ public class Mesa {
 			listaJugadores.get(jugador).setCarta1(nueva_carta);
 		else
 			listaJugadores.get(jugador).setCarta2(nueva_carta);
+	}
+
+	public boolean enRango(int jugador,List<String> strings) {
+		// TODO Auto-generated method stub
+		return listaJugadores.get(jugador).enRango(strings);
 	}
 	
 	

@@ -21,7 +21,7 @@ public class Controller {
 		mesa.initJugadores(isRandom);
 	}
 	
-	public Pair<Carta> getCartasJugador(int index) {
+	public Pair getCartasJugador(int index) {
 		return mesa.getJugador(index).getCartas();
 	}
 
@@ -34,5 +34,10 @@ public class Controller {
 		// TODO Auto-generated method stub
 		mesa.modificarJugador(jugador,i,nueva_ruta,vieja_ruta);
 		
+	}
+
+	public boolean enRango(int jugador,List<String> strings) {
+		// TODO Auto-generated method stub
+		return mesa.enRango(jugador,strings);
 	}
 }
