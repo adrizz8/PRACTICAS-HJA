@@ -89,6 +89,17 @@ public class Mesa {
 		// TODO Auto-generated method stub
 		return listaJugadores.get(jugador).enRango(strings);
 	}
+
+	public void cargarRanking(int jugador) {
+		// TODO Auto-generated method stub
+		listaJugadores.get(jugador).cargarRanking();
+	}
+
+	public boolean enPorcentaje(int jugador,double porcentaje) {
+	    // TODO Auto-generated method stub
+		
+		return listaJugadores.get(jugador).enPorcentaje(porcentaje);
+	}
 	
 	
 }

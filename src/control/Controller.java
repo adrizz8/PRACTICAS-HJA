@@ -40,4 +40,15 @@ public class Controller {
 		// TODO Auto-generated method stub
 		return mesa.enRango(jugador,strings);
 	}
+
+	public void cargarRanking(int jugador) {
+		// TODO Auto-generated method stub
+		mesa.cargarRanking(jugador);
+		
+	}
+
+	public boolean enPorcentaje(int jugador,double porcentaje) {
+		// TODO Auto-generated method stub
+		return mesa.enPorcentaje(jugador,porcentaje);
+	}
 }

@@ -119,6 +119,9 @@ public class PlayerPanel extends JPanel{
 
         // 🔹 Solo si es el Hero, añadimos los cuadros de rango
         if (name.equalsIgnoreCase("Hero")) {
+        	
+        	_ctrl.cargarRanking(jugador);
+        	
             // Subpanel vertical para equity + rangos
             JPanel bottomPanel = new JPanel();
             bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
@@ -186,20 +189,31 @@ public class PlayerPanel extends JPanel{
             	        strings.add(rango);
             	    else
             	        invalido = true;
-
             	    i++;
             	}
-            	
             	if(!invalido) 	
             		
-            		if(_ctrl.enRango(jugador, strings)) {
+            		if(_ctrl.enRango(jugador, strings)) 
             			rangeTextField.setBackground(Color.GREEN);
-            		}else {
+            		else 
             			rangeTextField.setBackground(Color.RED);
-            		}
+            	
             	else
             	    JOptionPane.showMessageDialog(null, "Rango Inválido");
- 	
+            });
+            
+            botonPercent.addActionListener(e->{
+            	
+            	String porcentaje = rangePercentField.getText();
+            	 if(esPorcentajeValido(porcentaje)) {
+            		 
+            		 if(_ctrl.enPorcentaje(jugador,Double.parseDouble(porcentaje)))
+            				 rangePercentField.setBackground(Color.GREEN);
+             		else 
+             			rangePercentField.setBackground(Color.RED);
+            		 
+            	 }else 
+            		 JOptionPane.showMessageDialog(null, "Porcentaje Inválido");
             });
             
             
@@ -301,6 +315,18 @@ public class PlayerPanel extends JPanel{
 		return i;
 	}
     
+    private boolean esPorcentajeValido(String s) {
+        try {
+            double num = Double.parseDouble(s);
+
+            // comprobar rango
+            return num > 0 && num <= 100;
+
+        } catch (NumberFormatException e) {
+            // no es un número
+            return false;
+        }
+    }
     
     
 }

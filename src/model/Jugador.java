@@ -2,24 +2,31 @@ package model;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
+import java.io.*;
+
 
 import misc.Pair;
 
 public class Jugador {
 	
+	private final int NUMEROS = 13;
 	private Pair holeCards;
 	private Mano mano;
 	private Mesa mesa;
-	private int[][] matRangos = new int[13][13];
+	private int[][] matRangos;
+	private int[][] matRanking;
 
 	
 	public Jugador(Mesa mesa, Pair holeCards) {
 		this.mesa = mesa;
 		this.holeCards = holeCards;
+		matRangos= new int[NUMEROS][NUMEROS];
+		matRanking= new int[NUMEROS][NUMEROS];
 		
 		//inicializar matriz
-		for(int i = 0; i < 13; i++) {
-			for(int j = 0; j < 13; j++) {
+		for(int i = 0; i < NUMEROS; i++) {
+			for(int j = 0; j < NUMEROS; j++) {
 				matRangos[i][j] = 0;
 			}
 		}
@@ -59,7 +66,7 @@ public class Jugador {
 				
 				
 				if(i == j) {
-					while (i < 13) {
+					while (i < NUMEROS) {
 						matRangos[i][j] = 1;
 						i++;
 						j++;
@@ -179,7 +186,7 @@ public class Jugador {
 		
 		*/
 		
-		matRangos= new int[13][13];
+		matRangos= new int[NUMEROS][NUMEROS];
 		
 		return enRango;
 	}
@@ -215,5 +222,35 @@ public class Jugador {
 	public void setCarta2(Carta nueva_carta) {
 		holeCards= new Pair(holeCards.getFirst(),nueva_carta);
 	
+	}
+	
+	public void cargarRanking() {
+		
+		try (Scanner sc = new Scanner(new File("resources/rankings/Ranking_Sklansky-Chubukov.txt"))) {
+		    for (int i = 0; i < NUMEROS; i++) {
+		        for (int j = 0; j < NUMEROS; j++) {
+		            matRanking[i][j] = sc.nextInt();
+		        }
+		    }
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public boolean enPorcentaje(double porcentaje) {
+		// TODO Auto-generated method stub
+		Carta i=holeCards.getHigh();
+		Carta j=holeCards.getLow();
+		double percenMano;
+		if(i.getPalo()==j.getPalo()) {
+			 percenMano=matRanking[i.getValorNumerico()-2][j.getValorNumerico()-2]/1.69;
+		}else {
+			 percenMano=matRanking[j.getValorNumerico()-2][i.getValorNumerico()-2]/1.69;
+		}
+		
+		if(percenMano<=porcentaje)
+			return true;
+		else
+			return false;
 	}
 }
