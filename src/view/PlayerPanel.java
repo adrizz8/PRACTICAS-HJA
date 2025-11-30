@@ -406,6 +406,7 @@ public class PlayerPanel extends JPanel{
     public boolean Comprobar_rangos() {
     	boolean invalido=false;
     	String texto=rangeTextField.getText();	
+    	texto = texto.replaceAll("\\s+", "");
     	String[] rangos= texto.split(",");
     	List<String> strings= new ArrayList<String>();
     	
