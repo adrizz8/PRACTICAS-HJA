@@ -92,6 +92,11 @@ public class Controller {
 		// TODO Auto-generated method stub
 		mesa.NuevaApuesta();
 	}
+	
+	public void QuitaApuesta() {
+		// TODO Auto-generated method stub
+		mesa.QuitaApuesta();
+	}
 
 	public void fold(int jugador) {
 		// TODO Auto-generated method stub

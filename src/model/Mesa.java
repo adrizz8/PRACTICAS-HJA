@@ -203,6 +203,10 @@ public class Mesa {
 		apuestaMesa=true;
 	}
 
+	public void QuitaApuesta() {
+		apuestaMesa = false;
+	}
+	
 	public boolean ExisteApuesta() {
 		// TODO Auto-generated method stub
 		return apuestaMesa;

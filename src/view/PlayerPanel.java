@@ -493,10 +493,19 @@ public class PlayerPanel extends JPanel{
     	rangeTextField.setText("FOLD");
     	equityPercent.setText("FOLD");
     	equityField.setText("");
+    	campoApuesta.setText("     FOLD");
+    	campoApuesta.setBackground(new Color(128, 128, 128));
     	_ctrl.fold(jugador);
-    	
     }
 		
+    
+    public void reset() {
+    	rangeTextField.setBackground(Color.WHITE);
+    	equityPercent.setBackground(Color.WHITE);
+   }
+		
+    
+    
     public static ImageIcon makeTransparent(Image img, float alpha) {
         int w = img.getWidth(null);
         int h = img.getHeight(null);

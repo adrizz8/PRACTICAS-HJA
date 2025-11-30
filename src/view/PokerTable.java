@@ -302,11 +302,17 @@ public class PokerTable extends JFrame {
     }
     private void fase() {
     	Map<Jugador, Double> equities = _ctrl.siguienteFase();
+        _ctrl.QuitaApuesta();
         if (equities == null) {
             mostrarFinDePartida();
             return;
         }
         actualizarEquities(equities);
         bP.actualizarBoard(_ctrl.getBoard());
+        
+        for(int i = 0; i < players.length; i++) {
+        	players[i].reset();
+        }
+        
     }
 }
