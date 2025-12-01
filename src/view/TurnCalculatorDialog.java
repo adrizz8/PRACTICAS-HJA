@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import control.Controller;
 
-/**
- * Diálogo para calcular si hacer Call o Fold en el Turn
- */
+
 public class TurnCalculatorDialog extends JDialog {
     
     private Controller ctrl;
@@ -31,12 +29,12 @@ public class TurnCalculatorDialog extends JDialog {
         setSize(500, 400);
         setLocationRelativeTo(getParent());
         
-        // Panel principal
+
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         
-        // Título
+
         JLabel titleLabel = new JLabel("Cálculo de Outs en el Turn");
         titleLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -57,7 +55,7 @@ public class TurnCalculatorDialog extends JDialog {
         mainPanel.add(explicacion);
         mainPanel.add(Box.createVerticalStrut(15));
         
-        // Campo de rango
+
         JPanel rangoPanel = new JPanel(new BorderLayout(5, 5));
         JLabel rangoLabel = new JLabel("Rango del Villano:");
         rangoLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
@@ -68,7 +66,7 @@ public class TurnCalculatorDialog extends JDialog {
         mainPanel.add(rangoPanel);
         mainPanel.add(Box.createVerticalStrut(10));
         
-        // Campo de EM
+
         JPanel emPanel = new JPanel(new BorderLayout(5, 5));
         JLabel emLabel = new JLabel("Equity Mínimo (EM) en %:");
         emLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
@@ -79,7 +77,7 @@ public class TurnCalculatorDialog extends JDialog {
         mainPanel.add(emPanel);
         mainPanel.add(Box.createVerticalStrut(15));
         
-        // Botón calcular
+ 
         JButton calcularBtn = new JButton("Calcular");
         calcularBtn.setFont(new Font("SansSerif", Font.BOLD, 13));
         calcularBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -87,7 +85,7 @@ public class TurnCalculatorDialog extends JDialog {
         mainPanel.add(calcularBtn);
         mainPanel.add(Box.createVerticalStrut(15));
         
-        // Área de resultados
+      
         JLabel resultLabel = new JLabel("Resultados:");
         resultLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
         mainPanel.add(resultLabel);
@@ -101,7 +99,7 @@ public class TurnCalculatorDialog extends JDialog {
         mainPanel.add(scrollPane);
         mainPanel.add(Box.createVerticalStrut(10));
         
-        // Etiqueta de decisión
+
         decisionLabel = new JLabel("");
         decisionLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         decisionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -109,7 +107,7 @@ public class TurnCalculatorDialog extends JDialog {
         
         add(mainPanel, BorderLayout.CENTER);
         
-        // Botón cerrar
+     
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton cerrarBtn = new JButton("Cerrar");
         cerrarBtn.addActionListener(e -> dispose());
@@ -119,7 +117,8 @@ public class TurnCalculatorDialog extends JDialog {
     
     private void calcular() {
         try {
-            // Validar que estamos en el Turn
+
+        	//Esto se hace para validar si estamos en la fase del Turn
             if (!"TURN".equals(ctrl.getFase())) {
                 JOptionPane.showMessageDialog(this,
                     "Este cálculo solo se puede realizar en el Turn",
@@ -128,7 +127,7 @@ public class TurnCalculatorDialog extends JDialog {
                 return;
             }
             
-            // Validar y parsear el rango
+
             String rangoTexto = rangoField.getText().trim();
             if (rangoTexto.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
@@ -147,7 +146,7 @@ public class TurnCalculatorDialog extends JDialog {
                 }
             }
             
-            // Validar y parsear el EM
+
             String emTexto = emField.getText().trim();
             if (emTexto.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
@@ -171,18 +170,18 @@ public class TurnCalculatorDialog extends JDialog {
                 return;
             }
             
-            // Realizar el cálculo
+
             String info = ctrl.obtenerInfoOutsTurn(heroIndex, rangoVillano);
             boolean debeHacerCall = ctrl.debeHacerCallTurn(heroIndex, rangoVillano, emMinimo);
             
-            // Mostrar resultados
+
             resultadoArea.setText(info);
             
             if (debeHacerCall) {
-                decisionLabel.setText("✓ DECISIÓN: CALL");
+                decisionLabel.setText("DECISIÓN: CALL");
                 decisionLabel.setForeground(new Color(0, 150, 0));
             } else {
-                decisionLabel.setText("✗ DECISIÓN: FOLD");
+                decisionLabel.setText("DECISIÓN: FOLD");
                 decisionLabel.setForeground(Color.RED);
             }
             
