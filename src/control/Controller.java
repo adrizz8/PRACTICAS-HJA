@@ -6,7 +6,6 @@ import java.util.Map;
 
 import misc.Pair;
 import model.Carta;
-import model.CartaAleatoria;
 import model.Equity;
 import model.Mesa;
 import model.OutsCalculator;
@@ -36,8 +35,8 @@ public class Controller {
 		return mesa.getlistaCartas();
 	}
 
-	public void modificarJugador(int jugador, int i, String nueva_ruta, String vieja_ruta) {
-		mesa.modificarJugador(jugador,i,nueva_ruta,vieja_ruta);
+	public void modificarJugador(int jugador, int i, Carta nuevaCarta) {
+		mesa.modificarJugador(jugador, i, nuevaCarta);
 		
 	}
 
@@ -68,9 +67,9 @@ public class Controller {
 		return Equity.calcularEquity(mesa, mesa.getBoard());
 	}
 
-	public void modificarBoard(int i, String vieja_ruta, String nueva_ruta) {
+	public void modificarBoard(int i, Carta nuevaCarta) {
 		// TODO Auto-generated method stub
-		mesa.modificarBoard(i,vieja_ruta,nueva_ruta);
+		mesa.modificarBoard(i, nuevaCarta);
 	}
 
 	public List<Carta> getBoard() {

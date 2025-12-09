@@ -60,17 +60,18 @@ public class BoardPanel extends JPanel{
         c1.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-            	
-                String vieja_ruta= cartas.get(0).toString()+".png";
-             
                 new MatrizCambio(padre,_ctrl,c1).setVisible(true);
                 
-                String nueva_ruta=(String) c1.getClientProperty("nuevaCarta");
+                String nuevaCarta = (String) c1.getClientProperty("nuevaCarta");
                 c1.putClientProperty("nuevaCarta",null);
                 
-                if(nueva_ruta!=null) {
-	                _ctrl.modificarBoard(0,vieja_ruta,nueva_ruta);
-	                cartas=_ctrl.getBoard();
+                if(nuevaCarta!=null) {
+               	 nuevaCarta.replace(".png", "");
+                	Carta newCarta = new Carta(nuevaCarta);
+                	
+                	_ctrl.modificarBoard(0, newCarta);
+	                
+	                cartas = _ctrl.getBoard();
 	                
 	                ((PokerTable) padre).EquityCambioCarta();
                 }
@@ -80,80 +81,84 @@ public class BoardPanel extends JPanel{
         c2.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-            	
-                String vieja_ruta= cartas.get(1).toString()+".png";
-             
-                new MatrizCambio(padre,_ctrl,c2).setVisible(true);
-                
-                String nueva_ruta=(String) c2.getClientProperty("nuevaCarta");
-                c2.putClientProperty("nuevaCarta",null);
-                
-                if(nueva_ruta!=null) {
-	                _ctrl.modificarBoard(1,vieja_ruta,nueva_ruta);
-	                cartas=_ctrl.getBoard();
-	                
-	                ((PokerTable) padre).EquityCambioCarta();
-                }
+            	 new MatrizCambio(padre,_ctrl,c2).setVisible(true);
+                 
+                 String nuevaCarta = (String) c2.getClientProperty("nuevaCarta");
+                 c2.putClientProperty("nuevaCarta",null);
+                 
+                 if(nuevaCarta!=null) {
+                	 nuevaCarta.replace(".png", "");
+                 	Carta newCarta = new Carta(nuevaCarta);
+                 	
+                 	_ctrl.modificarBoard(1, newCarta);
+ 	                
+ 	                cartas = _ctrl.getBoard();
+ 	                
+ 	                ((PokerTable) padre).EquityCambioCarta();
+                 }
             }
         });
         
         c3.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-            	
-                String vieja_ruta= cartas.get(2).toString()+".png";
-             
-                new MatrizCambio(padre,_ctrl,c3).setVisible(true);
-                
-                String nueva_ruta=(String) c3.getClientProperty("nuevaCarta");
-                c3.putClientProperty("nuevaCarta",null);
-                
-                if(nueva_ruta!=null) {
-	                _ctrl.modificarBoard(2,vieja_ruta,nueva_ruta);
-	                cartas=_ctrl.getBoard();
-	                
-	                ((PokerTable) padre).EquityCambioCarta();
-                }
+            	 new MatrizCambio(padre,_ctrl,c3).setVisible(true);
+                 
+                 String nuevaCarta = (String) c3.getClientProperty("nuevaCarta");
+                 c3.putClientProperty("nuevaCarta",null);
+                 
+                 if(nuevaCarta!=null) {
+                	 nuevaCarta.replace(".png", "");
+                 	Carta newCarta = new Carta(nuevaCarta);
+                 	
+                 	_ctrl.modificarBoard(2, newCarta);
+ 	                
+ 	                cartas = _ctrl.getBoard();
+ 	                
+ 	                ((PokerTable) padre).EquityCambioCarta();
+                 }
             }
         });
         
         c4.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-            	
-                String vieja_ruta= cartas.get(3).toString()+".png";
-             
-                new MatrizCambio(padre,_ctrl,c4).setVisible(true);
-                
-                String nueva_ruta=(String) c4.getClientProperty("nuevaCarta");
-                c4.putClientProperty("nuevaCarta",null);
-                
-                if(nueva_ruta!=null) {
-	                _ctrl.modificarBoard(3,vieja_ruta,nueva_ruta);
-	                cartas=_ctrl.getBoard();
-	                
-	                ((PokerTable) padre).EquityCambioCarta();
-                }
+            	 new MatrizCambio(padre,_ctrl,c4).setVisible(true);
+                 
+                 String nuevaCarta = (String) c4.getClientProperty("nuevaCarta");
+                 c1.putClientProperty("nuevaCarta",null);
+                 
+                 if(nuevaCarta!=null) {
+                	 nuevaCarta.replace(".png", "");
+                 	Carta newCarta = new Carta(nuevaCarta);
+                 	
+                 	_ctrl.modificarBoard(3, newCarta);
+ 	                
+ 	                cartas = _ctrl.getBoard();
+ 	                
+ 	                ((PokerTable) padre).EquityCambioCarta();
+                 }
             }
         });
         
         c5.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-            	
-                String vieja_ruta= cartas.get(4).toString()+".png";
-             
-                new MatrizCambio(padre,_ctrl,c5).setVisible(true);
-                
-                String nueva_ruta=(String) c5.getClientProperty("nuevaCarta");
-                c5.putClientProperty("nuevaCarta",null);
-                
-                if(nueva_ruta!=null) {
-	                _ctrl.modificarBoard(4,vieja_ruta,nueva_ruta);
-	                cartas=_ctrl.getBoard();
-	                
-	                ((PokerTable) padre).EquityCambioCarta();
-                }
+            	 new MatrizCambio(padre,_ctrl,c5).setVisible(true);
+                 
+                 String nuevaCarta = (String) c5.getClientProperty("nuevaCarta");
+                 c1.putClientProperty("nuevaCarta",null);
+                 
+                 if(nuevaCarta!=null) {
+                	 nuevaCarta.replace(".png", "");
+                 	Carta newCarta = new Carta(nuevaCarta);
+                 	
+                 	_ctrl.modificarBoard(4, newCarta);
+ 	                
+ 	                cartas = _ctrl.getBoard();
+ 	                
+ 	                ((PokerTable) padre).EquityCambioCarta();
+                 }
             }
         });
        

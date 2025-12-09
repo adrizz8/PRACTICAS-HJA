@@ -40,6 +40,18 @@ public class Mesa {
 	    return c;
 	}
 	
+	public Carta getCarta(String carta) {
+		Carta c = new Carta(carta);
+		
+		for(int i = 0; i < listaCartas.size(); i++) {
+			if(listaCartas.get(i).equals(c)) {
+				listaCartas.remove(i);
+			}
+		}
+		
+		return c;
+	}
+	
 	public Jugador getJugador(int index) {
 		return listaJugadores.get(index);
 	}
@@ -85,21 +97,7 @@ public class Mesa {
 		return listaCartas;
 	}
 
-	public void modificarJugador(int jugador, int i, String nueva_ruta, String vieja_ruta) {
-		Carta nueva_carta=CartaAleatoria.eleccionCartaAleatoria(nueva_ruta);
 	
-		String texto_nueva_carta=nueva_carta.toString();
-		for(int j=0;j<listaCartas.size();j++) {
-			if(listaCartas.get(j).toString().equalsIgnoreCase(texto_nueva_carta))
-				listaCartas.remove(j);
-		}
-		if(!"0h.png".equalsIgnoreCase(vieja_ruta))
-			listaCartas.add(CartaAleatoria.eleccionCartaAleatoria(vieja_ruta));
-		if(i==0)
-			listaJugadores.get(jugador).setCarta1(nueva_carta);
-		else
-			listaJugadores.get(jugador).setCarta2(nueva_carta);
-	}
 	
     public Map<Jugador, Double> siguienteFase() {
     	Map<Jugador, Double> result = null;
@@ -175,22 +173,39 @@ public class Mesa {
     public String getFase() {
         return fase.name();
     }
-	
-	public void modificarBoard(int i, String vieja_ruta, String nueva_ruta) {
-		// TODO Auto-generated method stub
-		Carta nueva_carta=CartaAleatoria.eleccionCartaAleatoria(nueva_ruta);
-		
-		String texto_nueva_carta=nueva_carta.toString();
+    
+    public void modificarJugador(int jugador, int i, Carta nuevaCarta) {;
+		Carta cartaVieja;
+		if(i==0)
+			cartaVieja = listaJugadores.get(jugador).getCartas().getFirst();
+		else
+			cartaVieja = listaJugadores.get(jugador).getCartas().getSecond();
 		
 		for(int j=0;j<listaCartas.size();j++) {
-			if(listaCartas.get(j).toString().equalsIgnoreCase(texto_nueva_carta))
+			if(listaCartas.get(j).equals(nuevaCarta)) {
+				listaCartas.remove(j);
+			}			
+		}
+		
+		listaCartas.add(cartaVieja);
+		
+		if(i==0)
+			listaJugadores.get(jugador).setCarta1(nuevaCarta);
+		else
+			listaJugadores.get(jugador).setCarta2(nuevaCarta);
+	}
+    
+	public void modificarBoard(int i, Carta nuevaCarta) {
+		
+		for(int j=0;j<listaCartas.size();j++) {
+			
+			if(listaCartas.get(j).equals(nuevaCarta))
 				listaCartas.remove(j);
 		}
-		if(!"0h.png".equalsIgnoreCase(vieja_ruta))
-			listaCartas.add(CartaAleatoria.eleccionCartaAleatoria(vieja_ruta));
 		
-		board.set(i, nueva_carta);
+		listaCartas.add(board.get(i));
 		
+		board.set(i, nuevaCarta);
 	}
 
 	public void fold(int jugador) {

@@ -89,35 +89,42 @@ public class PlayerPanel extends JPanel{
         c1.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-                String vieja_ruta= cartas.getFirst().toString()+".png";
-             
+
                 new MatrizCambio(padre,_ctrl,c1).setVisible(true);
                 
-                String nueva_ruta=(String) c1.getClientProperty("nuevaCarta");
+                String nuevaCarta = (String) c1.getClientProperty("nuevaCarta");
                 c1.putClientProperty("nuevaCarta",null);
                 
-                if(nueva_ruta!=null) {
-	                _ctrl.modificarJugador(jugador,0,nueva_ruta,vieja_ruta);
-	                cartas=_ctrl.getCartasJugador(jugador);
+                if(nuevaCarta!=null) {
+                	nuevaCarta.replace(".png", "");
+                	Carta newCarta = new Carta(nuevaCarta);
+                	
+	                _ctrl.modificarJugador(jugador, 0, newCarta);
 	                
-	                //((PokerTable) padre).EquityCambioCarta();
+	                cartas = _ctrl.getCartasJugador(jugador);
+	                
+	                ((PokerTable) padre).EquityCambioCarta();
                 }
             }
         });
         c2.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-            	 String vieja_ruta= cartas.getSecond().toString()+".png";
-                 
+
                  new MatrizCambio(padre,_ctrl,c2).setVisible(true);
                  
-                 String nueva_ruta=(String) c2.getClientProperty("nuevaCarta");
+                 String nuevaCarta = (String) c2.getClientProperty("nuevaCarta");
                  c2.putClientProperty("nuevaCarta",null);
                  
-                 if(nueva_ruta!=null) {
- 	                _ctrl.modificarJugador(jugador,1,nueva_ruta,vieja_ruta);
- 	                cartas=_ctrl.getCartasJugador(jugador);
- 	               ((PokerTable) padre).EquityCambioCarta();
+                 if(nuevaCarta!=null) {
+                	 nuevaCarta.replace(".png", "");
+                 	Carta newCarta = new Carta(nuevaCarta);
+                 	
+ 	                _ctrl.modificarJugador(jugador, 1, newCarta);
+ 	                
+ 	                cartas = _ctrl.getCartasJugador(jugador);
+ 	                
+ 	                ((PokerTable) padre).EquityCambioCarta();
                  }
                 
                 

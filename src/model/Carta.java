@@ -67,7 +67,6 @@ public class Carta {
 	    return valor + "" + palo;
 	}
 	
-	
 	//Este método convierte el char del valor en un valor numérico para compararlo de manera más sencilla
 	public Integer getValorNumerico() {
 	    switch (valor) {
@@ -87,4 +86,10 @@ public class Carta {
 	        default: return -1;
 	    }
 	}
+	
+	public boolean equals(Carta other) {
+		return this.valor == other.valor && this.palo == other.palo;
+	}
+	
+	
 }
