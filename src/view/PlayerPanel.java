@@ -103,7 +103,10 @@ public class PlayerPanel extends JPanel{
 	                
 	                cartas = _ctrl.getCartasJugador(jugador);
 	                
-	                ((PokerTable) padre).EquityCambioCarta();
+	                if(_ctrl.numJugadoresValidos() >= 2) {
+	                	((PokerTable) padre).EquityCambioCarta();
+	                }
+	                
                 }
             }
         });
@@ -124,7 +127,9 @@ public class PlayerPanel extends JPanel{
  	                
  	                cartas = _ctrl.getCartasJugador(jugador);
  	                
- 	                ((PokerTable) padre).EquityCambioCarta();
+ 	                if(_ctrl.numJugadoresValidos() >= 2) {
+	                	((PokerTable) padre).EquityCambioCarta();
+	                }
                  }
                 
                 

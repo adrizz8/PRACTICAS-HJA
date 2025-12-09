@@ -63,8 +63,7 @@ public class Controller {
 	}
 
 	public Map<Jugador, Double> actualizarEquity() {
-		// TODO Auto-generated method stub
-		return Equity.calcularEquity(mesa, mesa.getBoard());
+		return Equity.calcularEquity(mesa, mesa.cartasBoard());
 	}
 
 	public void modificarBoard(int i, Carta nuevaCarta) {
@@ -77,6 +76,14 @@ public class Controller {
 		return mesa.getBoard();
 	}
 
+	public List<Carta> getCartasBoard(){
+		return mesa.cartasBoard();
+	}
+	
+	public int numJugadoresValidos() {
+		return mesa.getNumJugadoresValidos();
+	}
+	
 	public Map<Jugador, Double> siguienteFase() {
 		// TODO Auto-generated method stub
 		return mesa.siguienteFase();

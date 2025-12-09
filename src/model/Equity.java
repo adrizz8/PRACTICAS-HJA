@@ -4,16 +4,23 @@ import java.util.*;
 
 public class Equity {
 
-    private static final int NUM_SIMULACIONES = 5000;
+    private static final int NUM_SIMULACIONES = 500000;
 
     public static Map<Jugador, Double> calcularEquity(Mesa mesa, List<Carta> boardActual) {
         Map<Jugador, Double> equityAcumulada = new HashMap<>();
-        List<Jugador> jugadores = mesa.getListaJugadores();
+        List<Jugador> jugadores = new ArrayList<Jugador>();
         List<Carta> barajaRestante = new ArrayList<>(mesa.getlistaCartas());
-
-        for (Jugador j : jugadores) {
-            equityAcumulada.put(j, 0.0);
+        
+        for(Jugador j: mesa.getListaJugadores()) {
+        	if(j.esValido()) {
+        		jugadores.add(j);
+        		equityAcumulada.put(j, 0.0);
+        	}
         }
+        
+       // for (Jugador j : jugadores) {
+       //     equityAcumulada.put(j, 0.0);
+      //  }
 
         Random rand = new Random();
 

@@ -4,6 +4,8 @@ import javax.swing.*;
 import control.Controller;
 import model.Jugador;
 import model.Carta;
+import model.Equity;
+
 import java.util.List;
 
 import java.awt.*;
@@ -24,15 +26,19 @@ public class PokerTable extends JFrame {
 	private JButton betButton;
 	private JButton NobetButton;
 	
+	private boolean isRandom;
+	private boolean stageFinished;
 	
-	
-    public PokerTable(Controller ctrl, MainWindow mainWindow) {
+    public PokerTable(Controller ctrl, MainWindow mainWindow, boolean isRandom) {
     	super("Mesa de Poker");
     	_ctrl = ctrl;
     	this.mainWindow = mainWindow;
+    	this.isRandom = isRandom;
     	initGUI();     
     }
     
+    
+    ////////////////////////////////METODODS QUE SE UTILIZAN CUANDO ES RANDOM//////////////////////////////
     private void actualizarEquities(Map<Jugador, Double> equities) {
         int i = 0;
         for (Jugador j : _ctrl.getMesa().getListaJugadores()) {
@@ -86,21 +92,24 @@ public class PokerTable extends JFrame {
         boton_siguiente= new JButton("Siguiente");
         boton_siguiente.setBounds(900, 50, 100, 25);
         
-        manualBet= new Checkbox("Bet manual");
-        manualBet.setFont(new Font("SansSerif", Font.BOLD, 14));
-        manualBet.setBounds(900, 85, 200, 25);
-        manualBet.setEnabled(false);
-        
-        betButton=new JButton("Bet/Call");
-        betButton.setFont(new Font("SansSerif", Font.BOLD, 12));
-        betButton.setBounds(850, 120, 100, 25);
+        if(isRandom) {
+        	manualBet= new Checkbox("Bet manual");
+            manualBet.setFont(new Font("SansSerif", Font.BOLD, 14));
+            manualBet.setBounds(900, 85, 200, 25);
+            manualBet.setEnabled(false);
+            
+            betButton=new JButton("Bet/Call");
+            betButton.setFont(new Font("SansSerif", Font.BOLD, 12));
+            betButton.setBounds(850, 120, 100, 25);
 
-        NobetButton=new JButton("Fold");
-        NobetButton.setFont(new Font("SansSerif", Font.BOLD, 12));
-        NobetButton.setBounds(950, 120, 100, 25);
+            NobetButton=new JButton("Fold");
+            NobetButton.setFont(new Font("SansSerif", Font.BOLD, 12));
+            NobetButton.setBounds(950, 120, 100, 25);
+            
+            betButton.setEnabled(false);
+    		NobetButton.setEnabled(false);
+        }
         
-        betButton.setEnabled(false);
-		NobetButton.setEnabled(false);
         
         bP= new BoardPanel( _ctrl, this);
         
@@ -112,119 +121,109 @@ public class PokerTable extends JFrame {
         //BUTTONS
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
-        JButton siguienteFase = new JButton("Siguiente Fase");
-        
-        siguienteFase.addActionListener(e -> {
-            /*Map<Jugador, Double> equities = _ctrl.siguienteFase();
-            actualizarEquities(equities);
-            actualizarBoard(_ctrl.getBoard());*/
-        	
-        	Map<Jugador, Double> equities = _ctrl.siguienteFase();
-            if (equities == null) {
-                mostrarFinDePartida();
-                return;
-            }
-            actualizarEquities(equities);
-            bP.actualizarBoard(_ctrl.getBoard());
-        });
         
         boton_siguiente.addActionListener(e ->{
-        	       
         	int siguiente=_ctrl.actualJugador();
-        	if(siguiente!=-1) {
-	    		if(!players[siguiente].Comprobar_equity()&&!players[siguiente].Comprobar_rangos()) {
+        	
+        	//ALEATORIO
+        	if(isRandom) {
+        		if(siguiente!=-1) {
+    	    		if(!players[siguiente].Comprobar_equity()&&!players[siguiente].Comprobar_rangos()) {
 
-	    			players[siguiente].accion();
-	    			
-	    			_ctrl.siguienteJugador();
-	        		siguiente=_ctrl.actualJugador();
-	        		if(siguiente!=-1)
-	        			jugadorActual.setText(players[siguiente].getname());
-	        		else
-	        			jugadorActual.setText(_ctrl.getFase());
-	    		}
-        	}else {
-        		fase();	
-        		_ctrl.siguienteJugador();
-        		siguiente=_ctrl.actualJugador();
-        		
-    			jugadorActual.setText(players[siguiente].getname());
-        		manualBet.setEnabled(true);
+    	    			players[siguiente].accion();
+    	    			
+    	    			_ctrl.siguienteJugador();
+    	        		siguiente=_ctrl.actualJugador();
+    	        		if(siguiente!=-1)
+    	        			jugadorActual.setText(players[siguiente].getname());
+    	        		else
+    	        			jugadorActual.setText(_ctrl.getFase());
+    	    		}
+            	}else {
+            		fase();	
+            		_ctrl.siguienteJugador();
+            		siguiente=_ctrl.actualJugador();
+            		
+        			jugadorActual.setText(players[siguiente].getname());
+            		manualBet.setEnabled(true);
+            	}
         	}
+        	
+        	//NO ALEATORIO
+        	else {
+        		if(siguiente != -1) {
+        			if(!players[siguiente].Comprobar_equity()&&!players[siguiente].Comprobar_rangos()) {
+        				
+    	    			players[siguiente].accion();
+    	    			_ctrl.siguienteJugador();
+    	        		siguiente = _ctrl.actualJugador();
+    	    		}
+        		}
+        		else {
+        			if(stageFinished) {
+        				
+        			}
+        			else {
+        				_ctrl.siguienteJugador();
+        				siguiente=_ctrl.actualJugador();
+        			}
+        		}
+        	}
+        	
         	
         });
         
-        manualBet.addItemListener(e -> {
-        	if(manualBet.getState()) {
-        		betButton.setEnabled(true);
-        		NobetButton.setEnabled(true);
-        		boton_siguiente.setEnabled(false);
-        	}else {
-        		betButton.setEnabled(false);
-        		NobetButton.setEnabled(false);
-        		boton_siguiente.setEnabled(true);
-        	}
-        });
-        
-        betButton.addActionListener(e->{
-        	
-        	int siguiente=_ctrl.actualJugador();
-        	if(!players[siguiente].Comprobar_equity()&&!players[siguiente].Comprobar_rangos()) {
-
-    			players[siguiente].bet_call();
-    			
-    			_ctrl.siguienteJugador();
-        		siguiente=_ctrl.actualJugador();
-        		if(siguiente!=-1) 
-        			jugadorActual.setText(players[siguiente].getname());
-        		else{
-        			jugadorActual.setText(_ctrl.getFase());
-	        		intermedio();
-        		}
-    		}   	
-        });
-        
-        NobetButton.addActionListener(e->{
-
-        	int siguiente=_ctrl.actualJugador();
-        	if(!players[siguiente].Comprobar_equity()&&!players[siguiente].Comprobar_rangos()) {
-
-    			_ctrl.fold(siguiente);
-    			players[siguiente].fold();
-    						
-    			_ctrl.siguienteJugador();
-        		siguiente=_ctrl.actualJugador();
-        		if(siguiente!=-1) 
-        			jugadorActual.setText(players[siguiente].getname());
-        		else{
-        			jugadorActual.setText(_ctrl.getFase());
-	        		intermedio();
-        		}
-    		}   	
-        });
-        
-        JButton btnCalcularTurn = new JButton("Calculadora Turn");
-        btnCalcularTurn.setFont(new Font("SansSerif", Font.BOLD, 12));
-        btnCalcularTurn.setBounds(900, 160, 150, 30);
-        btnCalcularTurn.setToolTipText("Calcular si hacer Call o Fold en el Turn");
-
-        btnCalcularTurn.addActionListener(e -> {
-            // Verificar que estamos en el Turn
-            if (!"TURN".equals(_ctrl.getFase())) {
-                JOptionPane.showMessageDialog(this,
-                    "La calculadora de Turn solo está disponible en la fase de Turn",
-                    "Información",
-                    JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
+        if(isRandom) {
+        	manualBet.addItemListener(e -> {
+            	if(manualBet.getState()) {
+            		betButton.setEnabled(true);
+            		NobetButton.setEnabled(true);
+            		boton_siguiente.setEnabled(false);
+            	}else {
+            		betButton.setEnabled(false);
+            		NobetButton.setEnabled(false);
+            		boton_siguiente.setEnabled(true);
+            	}
+            });
             
-            // Abrir el diálogo de calculadora
-            // Por defecto usamos el jugador 4 (Hero) pero puedes cambiarlo
-            new TurnCalculatorDialog(this, _ctrl, 4).setVisible(true);
-        });
+            betButton.addActionListener(e->{
+            	
+            	int siguiente=_ctrl.actualJugador();
+            	if(!players[siguiente].Comprobar_equity()&&!players[siguiente].Comprobar_rangos()) {
 
-        // Añadir el botón a la ventana
-        add(btnCalcularTurn);
+        			players[siguiente].bet_call();
+        			
+        			_ctrl.siguienteJugador();
+            		siguiente=_ctrl.actualJugador();
+            		if(siguiente!=-1) 
+            			jugadorActual.setText(players[siguiente].getname());
+            		else{
+            			jugadorActual.setText(_ctrl.getFase());
+    	        		intermedio();
+            		}
+        		}   	
+            });
+            
+            NobetButton.addActionListener(e->{
+
+            	int siguiente=_ctrl.actualJugador();
+            	if(!players[siguiente].Comprobar_equity()&&!players[siguiente].Comprobar_rangos()) {
+
+        			_ctrl.fold(siguiente);
+        			players[siguiente].fold();
+        						
+        			_ctrl.siguienteJugador();
+            		siguiente=_ctrl.actualJugador();
+            		if(siguiente!=-1) 
+            			jugadorActual.setText(players[siguiente].getname());
+            		else{
+            			jugadorActual.setText(_ctrl.getFase());
+    	        		intermedio();
+            		}
+        		}   	
+            });
+        }
+        
         
         //buttonPanel.add(siguienteFase);
         table.add(buttonPanel, BorderLayout.SOUTH);
@@ -233,12 +232,16 @@ public class PokerTable extends JFrame {
         for (PlayerPanel p : players)
             add(p);
         
+        
         add(table);
         add(jugadorActual);
         add(boton_siguiente);
-        add(manualBet);
-        add(betButton);
-        add(NobetButton);
+        
+        if(isRandom) {
+        	add(manualBet);
+            add(betButton);
+            add(NobetButton);
+        }
         
     	//Boton para volver
     	JButton btnVolver = new JButton("Volver al menú principal");
@@ -292,6 +295,7 @@ public class PokerTable extends JFrame {
     	  actualizarEquities(_ctrl.actualizarEquity());
           bP.actualizarBoard(_ctrl.getBoard());
     }
+	
     private void mostrarFinDePartida() {
         JOptionPane.showMessageDialog(
             this,

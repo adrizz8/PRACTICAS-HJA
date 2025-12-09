@@ -11,6 +11,7 @@ public class MainWindow extends JFrame {
 
     private Controller _ctrl;
     private PokerTable _pokerTable;
+    
     private boolean isRandom;
 
     // GUI
@@ -59,14 +60,14 @@ public class MainWindow extends JFrame {
         btnRandom.addActionListener(e -> {
             isRandom = true;
             _ctrl.initJugadores(isRandom);
-            _pokerTable = new PokerTable(_ctrl, MainWindow.this);
+            _pokerTable = new PokerTable(_ctrl, MainWindow.this, true);
             setVisible(false);
         });
 
         btnUsuario.addActionListener(e -> {
             isRandom = false;
             _ctrl.initJugadores(isRandom);
-            _pokerTable = new PokerTable(_ctrl, MainWindow.this);
+            _pokerTable = new PokerTable(_ctrl, MainWindow.this, false);
             setVisible(false);
         });
 

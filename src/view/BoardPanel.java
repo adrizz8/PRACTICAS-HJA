@@ -73,7 +73,9 @@ public class BoardPanel extends JPanel{
 	                
 	                cartas = _ctrl.getBoard();
 	                
-	                ((PokerTable) padre).EquityCambioCarta();
+	                if(_ctrl.getCartasBoard().size() >= 3) {
+	                	((PokerTable) padre).EquityCambioCarta();
+	                }               
                 }
             }
         });
@@ -94,7 +96,9 @@ public class BoardPanel extends JPanel{
  	                
  	                cartas = _ctrl.getBoard();
  	                
- 	                ((PokerTable) padre).EquityCambioCarta();
+ 	               if(_ctrl.getCartasBoard().size() >= 3) {
+	                	((PokerTable) padre).EquityCambioCarta();
+	                }     
                  }
             }
         });
@@ -115,7 +119,9 @@ public class BoardPanel extends JPanel{
  	                
  	                cartas = _ctrl.getBoard();
  	                
- 	                ((PokerTable) padre).EquityCambioCarta();
+ 	               if(_ctrl.getCartasBoard().size() >= 3) {
+	                	((PokerTable) padre).EquityCambioCarta();
+	                }     
                  }
             }
         });
@@ -136,7 +142,9 @@ public class BoardPanel extends JPanel{
  	                
  	                cartas = _ctrl.getBoard();
  	                
- 	                ((PokerTable) padre).EquityCambioCarta();
+ 	               if(_ctrl.getCartasBoard().size() >= 3) {
+	                	((PokerTable) padre).EquityCambioCarta();
+	                }     
                  }
             }
         });
@@ -157,7 +165,9 @@ public class BoardPanel extends JPanel{
  	                
  	                cartas = _ctrl.getBoard();
  	                
- 	                ((PokerTable) padre).EquityCambioCarta();
+ 	               if(_ctrl.getCartasBoard().size() >= 3) {
+	                	((PokerTable) padre).EquityCambioCarta();
+	                }     
                  }
             }
         });

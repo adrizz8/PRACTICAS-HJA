@@ -23,7 +23,7 @@ public class Carta {
 	
 	public Carta(String string) {
 		this.valor = string.charAt(0);
-		this.palo = Palo.valueOf(string.substring(1));
+		this.palo = Palo.valueOf(string.charAt(1));
 	}
 	
 	public char getValor() {

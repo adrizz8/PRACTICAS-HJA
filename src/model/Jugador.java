@@ -16,7 +16,6 @@ public class Jugador {
 	private boolean fold;
 	private int[][] matRangos = new int[NUMEROS][NUMEROS];
 	private int[][] matRanking = new int[NUMEROS][NUMEROS];
-
 	
 	public Jugador(Mesa mesa, Pair holeCards) {
 		this.mesa = mesa;
@@ -28,6 +27,11 @@ public class Jugador {
 			}
 		}
 		///
+	}
+	
+	public boolean esValido() {
+		Carta aux = new Carta("0h");
+		return !holeCards.getFirst().equals(aux) && !holeCards.getSecond().equals(aux);
 	}
 	
 	public boolean enRango(List<String> strings) {

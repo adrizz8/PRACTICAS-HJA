@@ -13,7 +13,7 @@ public class Mesa {
 	private final int NUM_JUGADORES = 6;
 	private List<Carta> listaCartas = new ArrayList<Carta>(52);
 	private List<Jugador> listaJugadores = new ArrayList<Jugador>(6);
-	private List<Carta> board=new ArrayList<Carta>(5);
+	private List<Carta> board = new ArrayList<Carta>(5);
 	private Fase fase;
 	private boolean apuestaMesa;
 	private int jugadorActual;
@@ -97,15 +97,23 @@ public class Mesa {
 		return listaCartas;
 	}
 
+	public int getNumJugadoresValidos() {
+		int n = 0;
+		for(Jugador j: listaJugadores) {
+			if(j.esValido()) {
+				n++;
+			}
+		}
+		return n;
+	}
 	
 	
     public Map<Jugador, Double> siguienteFase() {
     	Map<Jugador, Double> result = null;
-    	
 
         switch (fase) {
         	case PREFLOP -> { //Pre flop
-        		List<Carta>CartasReales=cartasBoard();
+        		List<Carta>CartasReales = cartasBoard();
         		result = Equity.calcularEquity(this, CartasReales);
         	}
             case FLOP -> { // Flop
@@ -133,13 +141,11 @@ public class Mesa {
 
         fase=fase.siguiente();
         return result;
-  
-        
     }
 
-    private List<Carta> cartasBoard() {
+    public List<Carta> cartasBoard() {
 		// TODO Auto-generated method stub
-    	List<Carta> aux= new  ArrayList<Carta>();
+    	List<Carta> aux = new  ArrayList<Carta>();
     	
     	for (int i = 0; i < board.size(); i++) 
 			if(board.get(i).getValor()!='0') 
@@ -238,7 +244,7 @@ public class Mesa {
 		boolean encontrado = false;
 
 		while (i < NUM_JUGADORES && !encontrado) {
-		    if (!listaJugadores.get(i).getFold()) {
+		    if (!listaJugadores.get(i).getFold() && !listaJugadores.get(i).esValido()) {
 		        jugadorActual = i;
 		        encontrado = true;   // hace que el while termine
 		    } 
