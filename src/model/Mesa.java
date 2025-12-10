@@ -214,11 +214,15 @@ public class Mesa {
 		board.set(i, nuevaCarta);
 	}
 
-	public void fold(int jugador) {
+	public void setFold(int jugador, boolean b) {
 		// TODO Auto-generated method stub
-		listaJugadores.get(jugador).Fold();
+		listaJugadores.get(jugador).setFold(b);
 	}
 
+	
+	public boolean getFold(int jugador) {
+		return listaJugadores.get(jugador).getFold();	
+	}
 	public void NuevaApuesta() {
 		// TODO Auto-generated method stub
 		apuestaMesa=true;
@@ -235,7 +239,7 @@ public class Mesa {
 
 	public int actualJugador() {
 		// TODO Auto-generated method stub
-		return jugadorActual;
+		return this.jugadorActual;
 	}
 
 	public void siguienteJugador() {
@@ -244,7 +248,7 @@ public class Mesa {
 		boolean encontrado = false;
 
 		while (i < NUM_JUGADORES && !encontrado) {
-		    if (!listaJugadores.get(i).getFold() && !listaJugadores.get(i).esValido()) {
+		    if (!listaJugadores.get(i).getFold() && listaJugadores.get(i).esValido()) {
 		        jugadorActual = i;
 		        encontrado = true;   // hace que el while termine
 		    } 

@@ -248,12 +248,10 @@ public class Jugador {
 	}
 
 	public boolean getFold() {
-		// TODO Auto-generated method stub
 		return fold;
 	}
 
-	public void Fold() {
-		// TODO Auto-generated method stub
-		fold=true;
+	public void setFold(boolean fold) {
+		this.fold = fold;
 	}
 }

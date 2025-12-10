@@ -151,25 +151,33 @@ public class PokerTable extends JFrame {
         	
         	//NO ALEATORIO
         	else {
-        		if(siguiente != -1) {
-        			if(!players[siguiente].Comprobar_equity()&&!players[siguiente].Comprobar_rangos()) {
-        				
-    	    			players[siguiente].accion();
-    	    			_ctrl.siguienteJugador();
-    	        		siguiente = _ctrl.actualJugador();
-    	    		}
+        		if(!stageFinished && _ctrl.numJugadoresValidos() >= 2 ) {
+        			if(_ctrl.getCartasBoard().size() == 0 || _ctrl.getCartasBoard().size() >= 3) {
+        				if(siguiente == -1) {
+                			_ctrl.siguienteJugador();
+                    		siguiente=_ctrl.actualJugador();
+                		}
+                		
+                		if(!players[siguiente].Comprobar_equity()&&!players[siguiente].Comprobar_rangos()) {
+            				
+        	    			players[siguiente].accion();
+        	    			
+        	    			_ctrl.siguienteJugador();
+                    		siguiente=_ctrl.actualJugador();
+                    		
+                    		if(siguiente == -1) {
+                    			stageFinished = true;
+                    		}
+        	    		}
+        			}	
+        			else {
+        				JOptionPane.showMessageDialog(null, "Introduzca más cartas");
+        			}
         		}
         		else {
-        			if(stageFinished) {
-        				
-        			}
-        			else {
-        				_ctrl.siguienteJugador();
-        				siguiente=_ctrl.actualJugador();
-        			}
+        			 JOptionPane.showMessageDialog(null, "Introduzca más cartas");
         		}
         	}
-        	
         	
         });
         
@@ -209,7 +217,7 @@ public class PokerTable extends JFrame {
             	int siguiente=_ctrl.actualJugador();
             	if(!players[siguiente].Comprobar_equity()&&!players[siguiente].Comprobar_rangos()) {
 
-        			_ctrl.fold(siguiente);
+        			_ctrl.setFold(siguiente, true);
         			players[siguiente].fold();
         						
         			_ctrl.siguienteJugador();
@@ -304,6 +312,27 @@ public class PokerTable extends JFrame {
             JOptionPane.INFORMATION_MESSAGE
         );
     }
+    
+    public void resetAll() {
+    	for(int i = 0; i < players.length; i++) {
+        	players[i].reset();
+        	
+        	if(_ctrl.getFold(i)) {
+        		players[i].unfold();
+        	}
+        	
+        }
+    	
+    	while(_ctrl.actualJugador() != -1) {
+    		_ctrl.siguienteJugador();
+    	};
+    	
+    	if(!isRandom) {
+    		stageFinished = false;
+    	}
+
+    }
+    
     private void fase() {
     	Map<Jugador, Double> equities = _ctrl.siguienteFase();
         _ctrl.QuitaApuesta();
@@ -314,9 +343,7 @@ public class PokerTable extends JFrame {
         actualizarEquities(equities);
         bP.actualizarBoard(_ctrl.getBoard());
         
-        for(int i = 0; i < players.length; i++) {
-        	players[i].reset();
-        }
+        resetAll();
         
     }
 }

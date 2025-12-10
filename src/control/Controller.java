@@ -104,9 +104,13 @@ public class Controller {
 		mesa.QuitaApuesta();
 	}
 
-	public void fold(int jugador) {
+	public void setFold(int jugador, boolean b) {
 		// TODO Auto-generated method stub
-		mesa.fold(jugador);
+		mesa.setFold(jugador, b);
+	}
+	
+	public boolean getFold(int jugador) {
+		return mesa.getFold(jugador);
 	}
 
 	public int actualJugador() {

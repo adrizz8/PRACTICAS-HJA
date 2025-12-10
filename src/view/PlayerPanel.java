@@ -39,6 +39,10 @@ public class PlayerPanel extends JPanel{
 	private JTextField rangeTextField;
 	private JTextField equityField;
 	private JTextField equityPercent;
+	
+	private String prevRange;
+	private String prevEquity;
+	
 	private JTextField campoApuesta;
 	private double _equity;
 	private boolean _equitySuperada;
@@ -89,7 +93,9 @@ public class PlayerPanel extends JPanel{
         c1.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-
+            	
+            	int prev = _ctrl.numJugadoresValidos();
+            	
                 new MatrizCambio(padre,_ctrl,c1).setVisible(true);
                 
                 String nuevaCarta = (String) c1.getClientProperty("nuevaCarta");
@@ -103,9 +109,11 @@ public class PlayerPanel extends JPanel{
 	                
 	                cartas = _ctrl.getCartasJugador(jugador);
 	                
-	                if(_ctrl.numJugadoresValidos() >= 2) {
+	                if(_ctrl.numJugadoresValidos() >= 2 && _ctrl.numJugadoresValidos() != prev) {
 	                	((PokerTable) padre).EquityCambioCarta();
 	                }
+	                
+	                ((PokerTable) padre).resetAll();
 	                
                 }
             }
@@ -113,7 +121,9 @@ public class PlayerPanel extends JPanel{
         c2.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-
+            	
+            	int prev = _ctrl.numJugadoresValidos();
+            	
                  new MatrizCambio(padre,_ctrl,c2).setVisible(true);
                  
                  String nuevaCarta = (String) c2.getClientProperty("nuevaCarta");
@@ -127,9 +137,11 @@ public class PlayerPanel extends JPanel{
  	                
  	                cartas = _ctrl.getCartasJugador(jugador);
  	                
- 	                if(_ctrl.numJugadoresValidos() >= 2) {
+ 	                if(_ctrl.numJugadoresValidos() >= 2 && _ctrl.numJugadoresValidos() != prev) {
 	                	((PokerTable) padre).EquityCambioCarta();
 	                }
+ 	                
+ 	               ((PokerTable) padre).resetAll();
                  }
                 
                 
@@ -502,18 +514,31 @@ public class PlayerPanel extends JPanel{
          c1.setIcon(icon1Semi);
          c2.setIcon(icon2Semi);
          
+        prevRange = rangeTextField.getText();
+        prevEquity = equityPercent.getText();
+        
     	rangeTextField.setText("FOLD");
     	equityPercent.setText("FOLD");
     	equityField.setText("");
     	campoApuesta.setText("     FOLD");
     	campoApuesta.setBackground(new Color(128, 128, 128));
-    	_ctrl.fold(jugador);
+    	_ctrl.setFold(jugador, true);
+    }
+    
+    public void unfold() {
+    	rangeTextField.setText(prevRange);
+    	equityPercent.setText(prevEquity);
+    	c1.setIcon(toScaledIcon(loadImage(cartas.getFirst().toString() + ".png"), 80));
+    	c2.setIcon(toScaledIcon(loadImage(cartas.getSecond().toString() + ".png"), 80));
+    	campoApuesta.setBackground(new Color(0, 200, 0));
+    	_ctrl.setFold(jugador, false);
     }
 		
     
     public void reset() {
     	rangeTextField.setBackground(Color.WHITE);
     	equityPercent.setBackground(Color.WHITE);
+    	campoApuesta.setText("");
    }
 		
     
